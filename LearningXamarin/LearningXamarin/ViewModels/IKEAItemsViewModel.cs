@@ -86,6 +86,7 @@ namespace LearningXamarin.ViewModels
 		{
 			_navigationService = navigation;
 			Username = username;
+			InitializeCommands();
 		}
 
 		private void InitializeCommands()
