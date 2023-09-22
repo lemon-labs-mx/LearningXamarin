@@ -3,5 +3,34 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="LearningXamarin.Views.IKEAItemDetailedPage">
+
+    <StackLayout>
+        <CarouselView
+            HeightRequest="500"
+            ItemsSource="{Binding CarouselViewData}"
+            PeekAreaInsets="20">
+
+            <!--Como quiero que se vea mi UI-->
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <!--Recuerden, si mandan un "." eso significa que va a-->
+                    <!--buscar en el "contexto actual", en este caso, va a-->
+                    <!--mandar la informacion que contiene cada item del ItemSource,-->
+                    <!--mas precisamente, va a mandar cada string que contenga--> 
+                    <!--la propiedad "CarouselViewData"-->
+                    <Image
+                        Source="{Binding .}"/>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+
+            <!--Que tan separado quieres que se vean las imagenes-->
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Horizontal"
+                    ItemSpacing="10" />
+            </CarouselView.ItemsLayout>
+
+        </CarouselView>
+    </StackLayout>
 </ContentPage>
 

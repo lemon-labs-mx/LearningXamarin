@@ -10,11 +10,11 @@
 
 		public decimal Price { get; set; }
 
-		//string LongDescription
-		//string FAQ
-		//string Image2
-		//string Image3
-		//string Image4
+		public string Image2 { get; set; }
+
+		public string Image3 { get; set; }
+
+		public string Image4 { get; set; }
 	}
 }
 

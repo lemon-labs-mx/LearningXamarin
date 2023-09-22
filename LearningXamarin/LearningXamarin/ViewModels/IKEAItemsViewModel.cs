@@ -102,11 +102,13 @@ namespace LearningXamarin.ViewModels
 			{
 				new IKEAItemModel
 				{
-					Image = "https://www.gaiadesign.com.mx/media/catalog/product/cache/28cb47c806b746a91bc25b380c9673fa/m/e/mesa_lateral_xocos_cafe_still1_v1.jpg",
+					Image = "https://m.media-amazon.com/images/I/71bfi8YVE9L.__AC_SX300_SY300_QL70_ML2_.jpg",
 					Name = "Mesa de noche",
 					Description = "Linda mesa de noche de 30 x 30 cm",
 					Price = 120.50M,
-				},
+					Image2 = "https://m.media-amazon.com/images/I/71cJOehwwcL._AC_SL1500_.jpg",
+					Image3 = "https://m.media-amazon.com/images/I/71SerGW-U3L._AC_SL1500_.jpg"
+                },
 
 				new IKEAItemModel
 				{
