@@ -1,6 +1,5 @@
-﻿using System;
+﻿using LearningXamarin.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace LearningXamarin
 {
@@ -10,7 +9,7 @@ namespace LearningXamarin
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart ()

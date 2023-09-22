@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:LearningXamarin.ViewModels"
+    xmlns:models="clr-namespace:LearningXamarin.Models"
+    x:DataType="vm:IKEAItemsViewModel"
+    x:Class="LearningXamarin.Views.IKEAItemsPage">
+
+    <StackLayout>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span
+                        Text="Hello "
+                        FontSize="Large"/>
+                    <Span
+                        Text="{Binding Username}"
+                        FontSize="Large"
+                        FontAttributes="Italic"/>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <RefreshView
+            IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+            Command="{Binding RefreshViewCommand}">
+            <CollectionView
+                BackgroundColor="Black"
+                ItemsSource="{Binding IKEAItems}"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedItem}"
+                SelectionChangedCommand="{Binding ItemSelectedCommand}">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate
+                        x:DataType="models:IKEAItemModel">
+                        <Grid
+                            RowDefinitions="100, 25, 20, 30, 1"
+                            Padding="10,0,10,50">
+
+                            <Image
+                                Source="{Binding Image}"/>
+
+                            <Label
+                                Grid.Row="1"
+                                Text="{Binding Name}"
+                                FontAttributes="Bold"/>
+
+                            <Label
+                                Grid.Row="2"
+                                Text="{Binding Description}"/>
+
+                            <Label
+                                Grid.Row="3">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span
+                                            Text="$"
+                                            FontAttributes="Bold"/>
+                                        <Span
+                                            Text="{Binding Price}"
+                                            FontAttributes="Bold"/>
+                                        <Span
+                                            Text=" / piece"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <BoxView
+                                Grid.Row="4"
+                                HeightRequest="1"
+                                Color="White"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+                    <StackLayout>
+                        <Label
+                            Text="Not data found!"
+                            FontSize="Large"
+                            FontAttributes="Bold"
+                            TextColor="Red"
+                            HorizontalOptions="Center"/>
+                        <Image
+                            Source="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678069-sign-error-512.png" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+            </CollectionView>
+        </RefreshView>
+
+    </StackLayout>
+</ContentPage>
+

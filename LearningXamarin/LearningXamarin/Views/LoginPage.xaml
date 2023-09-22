@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:LearningXamarin.ViewModels"
+    x:DataType="vm:LoginViewModel"
+    x:Class="LearningXamarin.Views.LoginPage">
+    <Grid
+        RowDefinitions="70, 30, 60, 30, 60, 50">
+
+        <!-- Login -->
+        <Label
+            Grid.Row="0"
+            Text="Login"
+            FontSize="Large"/>
+
+        <!-- Username Title -->
+        <Label
+            Grid.Row="1"
+            Text="Username"/>
+
+        <!-- Username Entry -->
+        <Entry
+            Grid.Row="2"
+            Text="{Binding UserName}"/>
+
+        <!-- Password -->
+        <Label
+            Grid.Row="3"
+            Text="Password"/>
+
+        <!-- Password Entry -->
+        <Entry
+            Grid.Row="4"
+            Text="{Binding PasswordText}"/>
+
+        <Button
+            Grid.Row="5"
+            Text="Login!"
+            Command="{Binding LoginCommand}"/>
+    </Grid>
+</ContentPage>
+
