@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using LearningXamarin.Models;
+using LearningXamarin.Services.APIClientService;
 using LearningXamarin.Views;
 using Xamarin.Forms;
 
@@ -13,7 +14,9 @@ namespace LearningXamarin.ViewModels
 
 		private bool _isBusy;
 		private string _username;
+		//Cambien aqui IKEAItemModel a StoreProductResponse
 		private IKEAItemModel _selectedItem;
+		//Cambien aqui IKEAItemModel a StoreProductResponse
 		private ObservableCollection<IKEAItemModel> _iKEAItems;
 
 		public bool IsBusy
@@ -46,6 +49,7 @@ namespace LearningXamarin.ViewModels
             }
         }
 
+		//Cambien aqui IKEAItemModel a StoreProductResponse
 		public IKEAItemModel SelectedItem
 		{
 			get => _selectedItem;
@@ -61,6 +65,7 @@ namespace LearningXamarin.ViewModels
             }
         }
 
+		//Cambien aqui IKEAItemModel a StoreProductResponse
 		public ObservableCollection<IKEAItemModel> IKEAItems
 		{
 			get => _iKEAItems;
@@ -76,11 +81,11 @@ namespace LearningXamarin.ViewModels
             }
         }
 
-		public ICommand LoadDataCommand { get; set; }
-
 		public ICommand RefreshViewCommand { get; set; }
 
 		public ICommand ItemSelectedCommand { get; set; }
+
+		public ICommand GetDataFromAPIService { get; set; }
 
 		public IKEAItemsViewModel(INavigation navigation, string username)
 		{
@@ -91,33 +96,9 @@ namespace LearningXamarin.ViewModels
 
 		private void InitializeCommands()
 		{
-			LoadDataCommand = new Command(ExecuteLoadDataCommand);
 			RefreshViewCommand = new Command(async () => await ExecuteRefreshViewCommand());
 			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
-        }
-
-		private void ExecuteLoadDataCommand()
-		{
-			IKEAItems = new ObservableCollection<IKEAItemModel>
-			{
-				new IKEAItemModel
-				{
-					Image = "https://m.media-amazon.com/images/I/71bfi8YVE9L.__AC_SX300_SY300_QL70_ML2_.jpg",
-					Name = "Mesa de noche",
-					Description = "Linda mesa de noche de 30 x 30 cm",
-					Price = 120.50M,
-					Image2 = "https://m.media-amazon.com/images/I/71cJOehwwcL._AC_SL1500_.jpg",
-					Image3 = "https://m.media-amazon.com/images/I/71SerGW-U3L._AC_SL1500_.jpg"
-                },
-
-				new IKEAItemModel
-				{
-					Image = "https://http2.mlstatic.com/D_NQ_NP_812901-MLM46460205115_062021-O.webp",
-					Name = "Taza horrible",
-					Description = "Regala a tus amigos esta cochinada",
-					Price = 99.50M,
-				}
-			};
+			GetDataFromAPIService = new Command(async () => await ExecuteGetDataFromAPIService());
         }
 
 		private async Task ExecuteRefreshViewCommand()
@@ -131,7 +112,7 @@ namespace LearningXamarin.ViewModels
 
 			//Simular llamada a internet
 			await Task.Delay(1500);
-			LoadDataCommand.Execute(null);
+			GetDataFromAPIService.Execute(null);
 			//Añadan mas items a su Lista
 			//...
 
@@ -145,10 +126,36 @@ namespace LearningXamarin.ViewModels
 				return;
             }
 
-			//Do your stuff here!
+			//Cambien aqui IKEAItemModel a StoreProductResponse
 			_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
 
 			SelectedItem = null;
+        }
+
+		private async Task ExecuteGetDataFromAPIService()
+		{
+			APIClientService clientService = new APIClientService();
+			var restResponse = await clientService.GetProducts();
+
+			if (restResponse.IsSuccessful && restResponse.Data != null)
+			{
+				//Inizializando la propiedad IKEAItems para despues meterle datos
+				IKEAItems = new ObservableCollection<IKEAItemModel>();
+
+				//Recorrer la Lista "Data", ahi vienen los datos de la api
+				foreach (var product in restResponse.Data)
+				{
+					//Yo les recomiendo que no hagan esto, cambien el IKEAItemModel
+					//y ahora usen StoreProductResponse
+					IKEAItems.Add(new IKEAItemModel
+					{
+						Name = product.Title,
+						Image = product.Image,
+						Description = product.Description,
+						Price = product.Price,
+                    });
+				}
+			}
         }
 	}
 }

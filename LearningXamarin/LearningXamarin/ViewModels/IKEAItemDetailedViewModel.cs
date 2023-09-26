@@ -5,9 +5,11 @@ namespace LearningXamarin.ViewModels
 {
     public class IKEAItemDetailedViewModel :BaseViewModel
 	{
+		//Cambien aqui IKEAItemModel a StoreProductResponse
 		private IKEAItemModel _item;
 		private List<string> _carouselViewData;
 
+		//Cambien aqui IKEAItemModel a StoreProductResponse
 		public IKEAItemModel Item
 		{
 			get => _item;
@@ -38,6 +40,7 @@ namespace LearningXamarin.ViewModels
             }
         }
 
+		//Cambien aqui IKEAItemModel a StoreProductResponse
 		public IKEAItemDetailedViewModel(IKEAItemModel itemModel)
 		{
 			Item = itemModel;

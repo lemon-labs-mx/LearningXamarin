@@ -1,5 +1,6 @@
 ﻿namespace LearningXamarin.Models
 {
+	//Una vez que se cambien VMs y XAMLs a StoreProductResponse, este archivo se puede eliminar
 	public class IKEAItemModel
 	{
 		public string Image { get; set; }
@@ -8,7 +9,7 @@
 
 		public string Description { get; set; }
 
-		public decimal Price { get; set; }
+		public double Price { get; set; }
 
 		public string Image2 { get; set; }
 

@@ -33,6 +33,7 @@
                 SelectionChangedCommand="{Binding ItemSelectedCommand}">
 
                 <CollectionView.ItemTemplate>
+                    <!-- Cambien el DataType de IKEAItemModel a StoreProductResponse-->
                     <DataTemplate
                         x:DataType="models:IKEAItemModel">
                         <Grid
@@ -42,6 +43,7 @@
                             <Image
                                 Source="{Binding Image}"/>
 
+                            <!--binding cambia a Title-->
                             <Label
                                 Grid.Row="1"
                                 Text="{Binding Name}"
