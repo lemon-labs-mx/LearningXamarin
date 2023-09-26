@@ -14,15 +14,23 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\" />
     <None Remove="ViewModels\" />
     <None Remove="Models\" />
+    <None Remove="Services\" />
+    <None Remove="Services\APIClientService\" />
+    <None Remove="Models\Responses\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Models\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\APIClientService\" />
+    <Folder Include="Models\Responses\" />
   </ItemGroup>
 </Project>
