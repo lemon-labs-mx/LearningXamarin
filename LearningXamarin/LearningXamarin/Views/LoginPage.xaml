@@ -4,7 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:LearningXamarin.ViewModels"
     x:DataType="vm:LoginViewModel"
-    x:Class="LearningXamarin.Views.LoginPage">
+    x:Class="LearningXamarin.Views.LoginPage"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="{x:StaticResource BackgroundWhite}"
+    Padding="10, 40">
     <Grid
         RowDefinitions="70, 30, 60, 30, 60, 50">
 
@@ -12,31 +15,38 @@
         <Label
             Grid.Row="0"
             Text="Login"
+            TextColor="Black"
             FontSize="Large"/>
 
         <!-- Username Title -->
         <Label
             Grid.Row="1"
-            Text="Username"/>
+            Text="Username"
+            TextColor="Black"/>
 
         <!-- Username Entry -->
         <Entry
             Grid.Row="2"
-            Text="{Binding UserName}"/>
+            Text="{Binding UserName}"
+            TextColor="Black"/>
 
         <!-- Password -->
         <Label
             Grid.Row="3"
-            Text="Password"/>
+            Text="Password"
+            TextColor="Black"/>
 
         <!-- Password Entry -->
         <Entry
             Grid.Row="4"
-            Text="{Binding PasswordText}"/>
+            Text="{Binding PasswordText}"
+            TextColor="Black"/>
 
         <Button
             Grid.Row="5"
             Text="Login!"
+            TextColor="White"
+            BackgroundColor="{x:StaticResource PrimaryBlue}"
             Command="{Binding LoginCommand}"/>
     </Grid>
 </ContentPage>

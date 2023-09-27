@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="LearningXamarin.Styles.Colors">
+    <!--Primary Colors-->
+    <Color x:Key="PrimaryBlue">#3E87A8</Color>
+    <Color x:Key="PrimaryYellow">#F5EF5B</Color>
+    <Color x:Key="BackgroundWhite">#EFF8FB</Color>
+
+    <!--Secondary Colors-->
+    <Color x:Key="SecondaryBlue">#73CBF5</Color>
+
+    <!--Extra Colors-->
+    <Color x:Key="Red">#F55969</Color>
+
+</ResourceDictionary>
+

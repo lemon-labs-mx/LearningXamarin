@@ -5,10 +5,12 @@
     xmlns:vm="clr-namespace:LearningXamarin.ViewModels"
     xmlns:models="clr-namespace:LearningXamarin.Models.Responses"
     x:DataType="vm:IKEAItemsViewModel"
-    x:Class="LearningXamarin.Views.IKEAItemsPage">
+    x:Class="LearningXamarin.Views.IKEAItemsPage"
+   BackgroundColor="{x:StaticResource BackgroundWhite}">
 
     <StackLayout>
-        <Label>
+        <Label
+            TextColor="Black">
             <Label.FormattedText>
                 <FormattedString>
                     <Span
@@ -26,7 +28,6 @@
             IsRefreshing="{Binding IsBusy, Mode=OneWay}"
             Command="{Binding RefreshViewCommand}">
             <CollectionView
-                BackgroundColor="Black"
                 ItemsSource="{Binding IKEAItems}"
                 SelectionMode="Single"
                 SelectedItem="{Binding SelectedItem}"
@@ -45,14 +46,17 @@
                             <Label
                                 Grid.Row="1"
                                 Text="{Binding Title}"
+                                TextColor="Black"
                                 FontAttributes="Bold"/>
 
                             <Label
                                 Grid.Row="2"
-                                Text="{Binding Description}"/>
+                                Text="{Binding Description}"
+                                TextColor="Black"/>
 
                             <Label
-                                Grid.Row="3">
+                                Grid.Row="3"
+                                TextColor="Black">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span
@@ -70,7 +74,7 @@
                             <BoxView
                                 Grid.Row="4"
                                 HeightRequest="1"
-                                Color="White"/>
+                                Color="{x:StaticResource SecondaryBlue}"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -81,7 +85,7 @@
                             Text="Not data found!"
                             FontSize="Large"
                             FontAttributes="Bold"
-                            TextColor="Red"
+                            TextColor="{x:StaticResource Red}"
                             HorizontalOptions="Center"/>
                         <Image
                             Source="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678069-sign-error-512.png" />

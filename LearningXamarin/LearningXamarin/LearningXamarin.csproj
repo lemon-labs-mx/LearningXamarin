@@ -24,6 +24,7 @@
     <None Remove="Services\" />
     <None Remove="Services\APIClientService\" />
     <None Remove="Models\Responses\" />
+    <None Remove="Styles\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -32,5 +33,6 @@
     <Folder Include="Services\" />
     <Folder Include="Services\APIClientService\" />
     <Folder Include="Models\Responses\" />
+    <Folder Include="Styles\" />
   </ItemGroup>
 </Project>
