@@ -9,8 +9,7 @@
    BackgroundColor="{x:StaticResource BackgroundWhite}">
 
     <StackLayout>
-        <Label
-            TextColor="Black">
+        <Label>
             <Label.FormattedText>
                 <FormattedString>
                     <Span
@@ -46,17 +45,14 @@
                             <Label
                                 Grid.Row="1"
                                 Text="{Binding Title}"
-                                TextColor="Black"
                                 FontAttributes="Bold"/>
 
                             <Label
                                 Grid.Row="2"
-                                Text="{Binding Description}"
-                                TextColor="Black"/>
+                                Text="{Binding Description}"/>
 
                             <Label
-                                Grid.Row="3"
-                                TextColor="Black">
+                                Grid.Row="3">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span

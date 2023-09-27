@@ -9,20 +9,19 @@
     BackgroundColor="{x:StaticResource BackgroundWhite}"
     Padding="10, 40">
     <Grid
-        RowDefinitions="70, 30, 60, 30, 60, 50">
+        RowDefinitions="70, 30, 60, 30, 60, 50, 40">
 
         <!-- Login -->
         <Label
             Grid.Row="0"
             Text="Login"
-            TextColor="Black"
+            TextColor="{x:StaticResource SecondaryBlue}"
             FontSize="Large"/>
 
         <!-- Username Title -->
         <Label
             Grid.Row="1"
-            Text="Username"
-            TextColor="Black"/>
+            Text="Username"/>
 
         <!-- Username Entry -->
         <Entry
@@ -33,8 +32,7 @@
         <!-- Password -->
         <Label
             Grid.Row="3"
-            Text="Password"
-            TextColor="Black"/>
+            Text="Password"/>
 
         <!-- Password Entry -->
         <Entry
@@ -42,12 +40,20 @@
             Text="{Binding PasswordText}"
             TextColor="Black"/>
 
+        <!-- Primary Button -->
         <Button
             Grid.Row="5"
             Text="Login!"
-            TextColor="White"
-            BackgroundColor="{x:StaticResource PrimaryBlue}"
+            Style="{x:StaticResource PrimaryButtonStyle}"
             Command="{Binding LoginCommand}"/>
+
+        <!--Secondary Button-->
+        <Button
+            Grid.Row="6"
+            Text="Forgot your password?"
+            WidthRequest="250"
+            HorizontalOptions="Center"
+            Style="{x:StaticResource SecondaryButtonStyle}"/>
     </Grid>
 </ContentPage>
 
