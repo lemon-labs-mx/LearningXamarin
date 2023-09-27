@@ -1,5 +1,4 @@
-﻿using System;
-using LearningXamarin.Styles;
+﻿using LearningXamarin.Styles;
 using LearningXamarin.Views;
 using Xamarin.Forms;
 
@@ -18,6 +17,7 @@ namespace LearningXamarin
         private void ApplyAppResources()
         {
             Resources.MergedDictionaries.Add(new Colors());
+            Resources.MergedDictionaries.Add(new CustomStyles());
         }
 
         protected override void OnStart ()

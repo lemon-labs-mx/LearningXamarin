@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="LearningXamarin.Styles.CustomStyles">
+
+    <!--General Styles-->
+    <!--The style will be applied to every control on your "TargetType"-->
+    <Style
+        TargetType="Label">
+        <Setter Property="TextColor" Value="Black"/>
+    </Style>
+
+    <!--Specific Styles-->
+    <!--You need to reference it in your view by the "Key"-->
+    <Style
+        x:Key="PrimaryButtonStyle"
+        TargetType="Button">
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="{x:StaticResource PrimaryBlue}"/>
+    </Style>
+
+    <Style
+        x:Key="SecondaryButtonStyle"
+        TargetType="Button">
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontSize" Value="Micro"/>
+        <Setter Property="BackgroundColor" Value="{x:StaticResource SecondaryBlue}"/>
+    </Style>
+</ResourceDictionary>
+
