@@ -3,7 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:LearningXamarin.ViewModels"
-    xmlns:models="clr-namespace:LearningXamarin.Models"
+    xmlns:models="clr-namespace:LearningXamarin.Models.Responses"
     x:DataType="vm:IKEAItemsViewModel"
     x:Class="LearningXamarin.Views.IKEAItemsPage">
 
@@ -33,20 +33,18 @@
                 SelectionChangedCommand="{Binding ItemSelectedCommand}">
 
                 <CollectionView.ItemTemplate>
-                    <!-- Cambien el DataType de IKEAItemModel a StoreProductResponse-->
                     <DataTemplate
-                        x:DataType="models:IKEAItemModel">
+                        x:DataType="models:StoreProductResponse">
                         <Grid
-                            RowDefinitions="100, 25, 20, 30, 1"
+                            RowDefinitions="100, 40, Auto, 30, 1"
                             Padding="10,0,10,50">
 
                             <Image
                                 Source="{Binding Image}"/>
 
-                            <!--binding cambia a Title-->
                             <Label
                                 Grid.Row="1"
-                                Text="{Binding Name}"
+                                Text="{Binding Title}"
                                 FontAttributes="Bold"/>
 
                             <Label

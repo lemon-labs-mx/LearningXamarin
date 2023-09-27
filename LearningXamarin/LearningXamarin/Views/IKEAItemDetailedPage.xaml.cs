@@ -1,4 +1,4 @@
-﻿using LearningXamarin.Models;
+﻿using LearningXamarin.Models.Responses;
 using LearningXamarin.ViewModels;
 using Xamarin.Forms;
 
@@ -6,11 +6,9 @@ namespace LearningXamarin.Views
 {
     public partial class IKEAItemDetailedPage : ContentPage
 	{	
-		//Cambien aqui IKEAItemModel a StoreProductResponse
-		public IKEAItemDetailedPage(IKEAItemModel model)
+		public IKEAItemDetailedPage(StoreProductResponse model)
 		{
 			InitializeComponent();
-			//Cambien aqui IKEAItemModel a StoreProductResponse
 			BindingContext = new IKEAItemDetailedViewModel(model);
 		}
 	}

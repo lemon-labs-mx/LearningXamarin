@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
-using LearningXamarin.Models;
+using LearningXamarin.Models.Responses;
 
 namespace LearningXamarin.ViewModels
 {
     public class IKEAItemDetailedViewModel :BaseViewModel
 	{
-		//Cambien aqui IKEAItemModel a StoreProductResponse
-		private IKEAItemModel _item;
+		private StoreProductResponse _item;
 		private List<string> _carouselViewData;
 
-		//Cambien aqui IKEAItemModel a StoreProductResponse
-		public IKEAItemModel Item
+		public StoreProductResponse Item
 		{
 			get => _item;
 			set
@@ -40,8 +38,7 @@ namespace LearningXamarin.ViewModels
             }
         }
 
-		//Cambien aqui IKEAItemModel a StoreProductResponse
-		public IKEAItemDetailedViewModel(IKEAItemModel itemModel)
+		public IKEAItemDetailedViewModel(StoreProductResponse itemModel)
 		{
 			Item = itemModel;
 			CarouselViewData = new List<string>();
@@ -56,25 +53,6 @@ namespace LearningXamarin.ViewModels
 			{
 				CarouselViewData.Add(Item.Image);
             }
-
-			if (!string.IsNullOrEmpty(Item.Image2))
-			{
-				CarouselViewData.Add(Item.Image2);
-            }
-
-			if (!string.IsNullOrEmpty(Item.Image3))
-			{
-				CarouselViewData.Add(Item.Image3);
-            }
-
-			if (!string.IsNullOrEmpty(Item.Image4))
-			{
-				CarouselViewData.Add(Item.Image4);
-            }
-
-			//Vamos a ponerlo por si acaso
-			//esto le avisa a la vista que se actualice
-			OnPropertyChanged(nameof(CarouselViewData));
         }
     }
 }

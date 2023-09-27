@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using LearningXamarin.Models;
+using LearningXamarin.Models.Responses;
 using LearningXamarin.Services.APIClientService;
 using LearningXamarin.Views;
 using Xamarin.Forms;
@@ -14,10 +14,8 @@ namespace LearningXamarin.ViewModels
 
 		private bool _isBusy;
 		private string _username;
-		//Cambien aqui IKEAItemModel a StoreProductResponse
-		private IKEAItemModel _selectedItem;
-		//Cambien aqui IKEAItemModel a StoreProductResponse
-		private ObservableCollection<IKEAItemModel> _iKEAItems;
+		private StoreProductResponse _selectedItem;
+		private ObservableCollection<StoreProductResponse> _iKEAItems;
 
 		public bool IsBusy
 		{
@@ -49,8 +47,7 @@ namespace LearningXamarin.ViewModels
             }
         }
 
-		//Cambien aqui IKEAItemModel a StoreProductResponse
-		public IKEAItemModel SelectedItem
+		public StoreProductResponse SelectedItem
 		{
 			get => _selectedItem;
 			set
@@ -65,8 +62,7 @@ namespace LearningXamarin.ViewModels
             }
         }
 
-		//Cambien aqui IKEAItemModel a StoreProductResponse
-		public ObservableCollection<IKEAItemModel> IKEAItems
+		public ObservableCollection<StoreProductResponse> IKEAItems
 		{
 			get => _iKEAItems;
 			set
@@ -126,7 +122,6 @@ namespace LearningXamarin.ViewModels
 				return;
             }
 
-			//Cambien aqui IKEAItemModel a StoreProductResponse
 			_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
 
 			SelectedItem = null;
@@ -140,20 +135,12 @@ namespace LearningXamarin.ViewModels
 			if (restResponse.IsSuccessful && restResponse.Data != null)
 			{
 				//Inizializando la propiedad IKEAItems para despues meterle datos
-				IKEAItems = new ObservableCollection<IKEAItemModel>();
+				IKEAItems = new ObservableCollection<StoreProductResponse>();
 
 				//Recorrer la Lista "Data", ahi vienen los datos de la api
 				foreach (var product in restResponse.Data)
 				{
-					//Yo les recomiendo que no hagan esto, cambien el IKEAItemModel
-					//y ahora usen StoreProductResponse
-					IKEAItems.Add(new IKEAItemModel
-					{
-						Name = product.Title,
-						Image = product.Image,
-						Description = product.Description,
-						Price = product.Price,
-                    });
+					IKEAItems.Add(product);
 				}
 			}
         }
