@@ -25,6 +25,12 @@
     <None Remove="Services\APIClientService\" />
     <None Remove="Models\Responses\" />
     <None Remove="Styles\" />
+    <None Remove="Resources\" />
+    <None Remove="Resources\Fonts\" />
+    <None Remove="Resources\Fonts\fa-regular-400.ttf" />
+    <None Remove="Resources\Fonts\fa-solid-900.ttf" />
+    <None Remove="Helpers\" />
+    <None Remove="Helpers\Constants\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -34,5 +40,13 @@
     <Folder Include="Services\APIClientService\" />
     <Folder Include="Models\Responses\" />
     <Folder Include="Styles\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Fonts\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Helpers\Constants\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
   </ItemGroup>
 </Project>

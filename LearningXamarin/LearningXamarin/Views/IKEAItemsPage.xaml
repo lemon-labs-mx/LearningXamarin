@@ -4,11 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:LearningXamarin.ViewModels"
     xmlns:models="clr-namespace:LearningXamarin.Models.Responses"
+    xmlns:icons="clr-namespace:LearningXamarin.Helpers.Constants"
     x:DataType="vm:IKEAItemsViewModel"
     x:Class="LearningXamarin.Views.IKEAItemsPage"
-   BackgroundColor="{x:StaticResource BackgroundWhite}">
+    BackgroundColor="{x:StaticResource BackgroundWhite}">
 
-    <StackLayout>
+    <Grid
+        RowDefinitions="30, *">
         <Label>
             <Label.FormattedText>
                 <FormattedString>
@@ -19,12 +21,18 @@
                         Text="{Binding Username}"
                         FontSize="Large"
                         FontAttributes="Italic"/>
+                    <Span
+                        Text="{x:Static icons:IconConstants.SearchIcon}"
+                        TextColor="Black"
+                        FontSize="Large"
+                        FontFamily="FASolid"/>
                 </FormattedString>
             </Label.FormattedText>
         </Label>
 
         <RefreshView
-            IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+            Grid.Row="1"
+            IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
             Command="{Binding RefreshViewCommand}">
             <CollectionView
                 ItemsSource="{Binding IKEAItems}"
@@ -91,6 +99,11 @@
             </CollectionView>
         </RefreshView>
 
-    </StackLayout>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            IsVisible="{Binding IsBusy}"
+            Style="{x:StaticResource BaseActivityIndicator}"/>
+
+    </Grid>
 </ContentPage>
 

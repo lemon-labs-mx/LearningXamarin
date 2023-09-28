@@ -27,5 +27,28 @@
         <Setter Property="FontSize" Value="Micro"/>
         <Setter Property="BackgroundColor" Value="{x:StaticResource SecondaryBlue}"/>
     </Style>
+
+    <Style
+        x:Key="BaseActivityIndicator"
+        TargetType="ActivityIndicator">
+        <Setter
+            Property="WidthRequest"
+            Value="30" />
+        <Setter
+            Property="HeightRequest"
+            Value="30" />
+        <Setter
+            Property="Color"
+            Value="{x:StaticResource PrimaryBlue}" />
+        <Setter
+            Property="IsRunning"
+            Value="True" />
+        <Setter
+            Property="InputTransparent"
+            Value="False" />
+        <Setter
+            Property="VerticalOptions"
+            Value="Center" />
+    </Style>
 </ResourceDictionary>
 
