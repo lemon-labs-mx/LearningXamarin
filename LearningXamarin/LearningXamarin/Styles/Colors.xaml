@@ -13,6 +13,7 @@
 
     <!--Extra Colors-->
     <Color x:Key="Red">#F55969</Color>
+    <Color x:Key="LightestGray">#f2f2f3</Color>
 
 </ResourceDictionary>
 

@@ -12,23 +12,23 @@ namespace LearningXamarin.ViewModels
 	{
 		private readonly INavigation _navigationService;
 
-		private bool _isBusy;
+		private bool _isRefreshing;
 		private string _username;
 		private StoreProductResponse _selectedItem;
 		private ObservableCollection<StoreProductResponse> _iKEAItems;
 
-		public bool IsBusy
+		public bool IsRefreshing
 		{
-			get => _isBusy;
+			get => _isRefreshing;
 			set
 			{
-				if (value == _isBusy)
+				if (value == _isRefreshing)
 				{
 					return;
                 }
 
-				_isBusy = value;
-				OnPropertyChanged(nameof(IsBusy));
+				_isRefreshing = value;
+				OnPropertyChanged(nameof(IsRefreshing));
             }
         }
 
@@ -77,6 +77,8 @@ namespace LearningXamarin.ViewModels
             }
         }
 
+		public ICommand GetIKEAItemsCommand { get; set; }
+
 		public ICommand RefreshViewCommand { get; set; }
 
 		public ICommand ItemSelectedCommand { get; set; }
@@ -88,43 +90,44 @@ namespace LearningXamarin.ViewModels
 			_navigationService = navigation;
 			Username = username;
 			InitializeCommands();
+
+			GetIKEAItemsCommand.Execute(null);
 		}
 
 		private void InitializeCommands()
 		{
+			GetIKEAItemsCommand = new Command(async () => await ExecuteGetIKEAItemsCommand());
 			RefreshViewCommand = new Command(async () => await ExecuteRefreshViewCommand());
-			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
 			GetDataFromAPIService = new Command(async () => await ExecuteGetDataFromAPIService());
+			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
         }
 
-		private async Task ExecuteRefreshViewCommand()
+		private async Task ExecuteGetIKEAItemsCommand()
 		{
-			if (IsBusy == true)
+			if (IsBusy)
 			{
 				return;
             }
 
 			IsBusy = true;
 
-			//Simular llamada a internet
-			await Task.Delay(1500);
-			GetDataFromAPIService.Execute(null);
-			//Añadan mas items a su Lista
-			//...
+			await ExecuteGetDataFromAPIService();
 
 			IsBusy = false;
         }
 
-		private void ExecuteItemSelectedCommand()
+		private async Task ExecuteRefreshViewCommand()
 		{
-			if (SelectedItem == null)
+			if (IsRefreshing)
 			{
 				return;
             }
 
-			_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
+			IsRefreshing = true;
 
-			SelectedItem = null;
+			await ExecuteGetDataFromAPIService();
+
+			IsRefreshing = false;
         }
 
 		private async Task ExecuteGetDataFromAPIService()
@@ -143,6 +146,18 @@ namespace LearningXamarin.ViewModels
 					IKEAItems.Add(product);
 				}
 			}
+        }
+
+		private void ExecuteItemSelectedCommand()
+		{
+			if (SelectedItem == null)
+			{
+				return;
+            }
+
+			_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
+
+			SelectedItem = null;
         }
 	}
 }
