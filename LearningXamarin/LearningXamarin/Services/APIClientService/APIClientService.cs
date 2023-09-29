@@ -23,5 +23,13 @@ namespace LearningXamarin.Services.APIClientService
 
 			return restResponse;
         }
+
+		public async Task<RestResponse<List<string>>> GetCategories()
+		{
+			var request = new RestRequest("products/categories");
+            var restResponse = await client.ExecuteGetAsync<List<string>>(request);
+
+			return restResponse;
+        }
     }
 }

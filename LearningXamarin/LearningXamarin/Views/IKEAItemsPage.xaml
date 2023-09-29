@@ -7,10 +7,13 @@
     xmlns:icons="clr-namespace:LearningXamarin.Helpers.Constants"
     x:DataType="vm:IKEAItemsViewModel"
     x:Class="LearningXamarin.Views.IKEAItemsPage"
+    Title="My Online Store"
+    NavigationPage.HasBackButton="False"
+    Padding="5,20,0,0"
     BackgroundColor="{x:StaticResource BackgroundWhite}">
 
     <Grid
-        RowDefinitions="30, *">
+        RowDefinitions="30, 35, *">
         <Label>
             <Label.FormattedText>
                 <FormattedString>
@@ -30,8 +33,34 @@
             </Label.FormattedText>
         </Label>
 
-        <RefreshView
+        <CollectionView
             Grid.Row="1"
+            ItemsSource="{Binding ItemCategories}"
+            SelectionMode="Single"
+            Margin="10,0,0,0">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Horizontal"
+                    ItemSpacing="15"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate
+                    x:DataType="{x:Null}">
+                    <Frame
+                        Padding="5"
+                        BackgroundColor="{x:StaticResource SecondaryBlue}"
+                        CornerRadius="10">
+                        <Label
+                            Text="{Binding .}"
+                            VerticalOptions="Center"/>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <RefreshView
+            Grid.Row="2"
             IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
             Command="{Binding RefreshViewCommand}">
             <CollectionView
@@ -100,7 +129,7 @@
         </RefreshView>
 
         <ActivityIndicator
-            Grid.RowSpan="2"
+            Grid.RowSpan="3"
             IsVisible="{Binding IsBusy}"
             Style="{x:StaticResource BaseActivityIndicator}"/>
 

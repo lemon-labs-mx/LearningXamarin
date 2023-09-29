@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using LearningXamarin.Models.Responses;
@@ -11,11 +13,13 @@ namespace LearningXamarin.ViewModels
     public class IKEAItemsViewModel : BaseViewModel
 	{
 		private readonly INavigation _navigationService;
+		private readonly APIClientService _apiClientService;
 
 		private bool _isRefreshing;
 		private string _username;
 		private StoreProductResponse _selectedItem;
 		private ObservableCollection<StoreProductResponse> _iKEAItems;
+		private ObservableCollection<string> _itemCategories;
 
 		public bool IsRefreshing
 		{
@@ -77,6 +81,21 @@ namespace LearningXamarin.ViewModels
             }
         }
 
+		public ObservableCollection<string> ItemCategories
+		{
+			get => _itemCategories;
+			set
+			{
+				if (value == _itemCategories)
+				{
+					return;
+                }
+
+				_itemCategories = value;
+				OnPropertyChanged(nameof(ItemCategories));
+            }
+        }
+
 		public ICommand GetIKEAItemsCommand { get; set; }
 
 		public ICommand RefreshViewCommand { get; set; }
@@ -88,6 +107,7 @@ namespace LearningXamarin.ViewModels
 		public IKEAItemsViewModel(INavigation navigation, string username)
 		{
 			_navigationService = navigation;
+			_apiClientService = new APIClientService();
 			Username = username;
 			InitializeCommands();
 
@@ -112,11 +132,12 @@ namespace LearningXamarin.ViewModels
 			IsBusy = true;
 
 			await ExecuteGetDataFromAPIService();
+            await GetProductCategories();
 
 			IsBusy = false;
         }
 
-		private async Task ExecuteRefreshViewCommand()
+        private async Task ExecuteRefreshViewCommand()
 		{
 			if (IsRefreshing)
 			{
@@ -132,8 +153,7 @@ namespace LearningXamarin.ViewModels
 
 		private async Task ExecuteGetDataFromAPIService()
 		{
-			APIClientService clientService = new APIClientService();
-			var restResponse = await clientService.GetProducts();
+			var restResponse = await _apiClientService.GetProducts();
 
 			if (restResponse.IsSuccessful && restResponse.Data != null)
 			{
@@ -146,6 +166,16 @@ namespace LearningXamarin.ViewModels
 					IKEAItems.Add(product);
 				}
 			}
+        }
+
+        private async Task GetProductCategories()
+        {
+			var restResponse = await _apiClientService.GetCategories();
+
+			if (restResponse.IsSuccessful && restResponse.Data != null)
+			{
+				ItemCategories = new ObservableCollection<string>(restResponse.Data);
+            }
         }
 
 		private void ExecuteItemSelectedCommand()
