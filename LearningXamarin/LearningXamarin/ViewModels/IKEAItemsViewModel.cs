@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using LearningXamarin.Models.Responses;
@@ -17,7 +19,9 @@ namespace LearningXamarin.ViewModels
 
 		private bool _isRefreshing;
 		private string _username;
+		private string _categorySelected;
 		private StoreProductResponse _selectedItem;
+		private List<StoreProductResponse> _backupIKEAItems;
 		private ObservableCollection<StoreProductResponse> _iKEAItems;
 		private ObservableCollection<string> _itemCategories;
 
@@ -48,6 +52,21 @@ namespace LearningXamarin.ViewModels
 
 				_username = value;
 				OnPropertyChanged(nameof(Username));
+            }
+        }
+
+		public string CategorySelected
+		{
+			get => _categorySelected;
+			set
+			{
+				if (value == _categorySelected)
+				{
+					return;
+                }
+
+				_categorySelected = value;
+				OnPropertyChanged(nameof(CategorySelected));
             }
         }
 
@@ -104,13 +123,16 @@ namespace LearningXamarin.ViewModels
 
 		public ICommand GetDataFromAPIService { get; set; }
 
+		public ICommand CategorySelectedCommand { get; set; }
+
 		public IKEAItemsViewModel(INavigation navigation, string username)
 		{
 			_navigationService = navigation;
 			_apiClientService = new APIClientService();
 			Username = username;
-			InitializeCommands();
+			CategorySelected = null;
 
+			InitializeCommands();
 			GetIKEAItemsCommand.Execute(null);
 		}
 
@@ -120,9 +142,10 @@ namespace LearningXamarin.ViewModels
 			RefreshViewCommand = new Command(async () => await ExecuteRefreshViewCommand());
 			GetDataFromAPIService = new Command(async () => await ExecuteGetDataFromAPIService());
 			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
+			CategorySelectedCommand = new Command(ExecuteCategorySelectedCommand);
         }
 
-		private async Task ExecuteGetIKEAItemsCommand()
+        private async Task ExecuteGetIKEAItemsCommand()
 		{
 			if (IsBusy)
 			{
@@ -158,13 +181,8 @@ namespace LearningXamarin.ViewModels
 			if (restResponse.IsSuccessful && restResponse.Data != null)
 			{
 				//Inizializando la propiedad IKEAItems para despues meterle datos
-				IKEAItems = new ObservableCollection<StoreProductResponse>();
-
-				//Recorrer la Lista "Data", ahi vienen los datos de la api
-				foreach (var product in restResponse.Data)
-				{
-					IKEAItems.Add(product);
-				}
+				IKEAItems = new ObservableCollection<StoreProductResponse>(restResponse.Data);
+				_backupIKEAItems = restResponse.Data;
 			}
         }
 
@@ -188,6 +206,37 @@ namespace LearningXamarin.ViewModels
 			_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
 
 			SelectedItem = null;
+        }
+
+        private void ExecuteCategorySelectedCommand()
+        {
+			if (CategorySelected == null || IsBusy)
+			{
+				return;
+            }
+
+			IsBusy = true;
+
+			//Filtrar mi lista por categoria de la manera "larga"
+			//List<StoreProductResponse> filteredList = new List<StoreProductResponse>();
+			//foreach (var item in _backupIKEAItems)
+			//{
+			//	if (item.Category == CategorySelected)
+			//	{
+			//		filteredList.Add(item);
+			//	}
+			//}
+
+			//Filtrar mi lista por categoria de la manera "corta"
+			var filteredList = _backupIKEAItems.Where(item => item.Category == CategorySelected);
+			//Usar _backupIKEAItems para siempre tener una lista con 
+			//los items completos obtenidos en el endpoint
+
+			IKEAItems = new ObservableCollection<StoreProductResponse>(filteredList);
+
+			CategorySelected = null;
+
+			IsBusy = false;
         }
 	}
 }
