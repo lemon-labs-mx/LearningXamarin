@@ -31,6 +31,7 @@
     <None Remove="Resources\Fonts\fa-solid-900.ttf" />
     <None Remove="Helpers\" />
     <None Remove="Helpers\Constants\" />
+    <None Remove="Models\Wrappers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -44,6 +45,7 @@
     <Folder Include="Resources\Fonts\" />
     <Folder Include="Helpers\" />
     <Folder Include="Helpers\Constants\" />
+    <Folder Include="Models\Wrappers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />

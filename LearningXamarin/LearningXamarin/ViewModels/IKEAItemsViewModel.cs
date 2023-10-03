@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using LearningXamarin.Models.Responses;
+using LearningXamarin.Models.Wrappers;
 using LearningXamarin.Services.APIClientService;
 using LearningXamarin.Views;
 using Xamarin.Forms;
@@ -19,11 +20,11 @@ namespace LearningXamarin.ViewModels
 
 		private bool _isRefreshing;
 		private string _username;
-		private string _categorySelected;
+		private IKEACategoryWrapper _categorySelected;
 		private StoreProductResponse _selectedItem;
 		private List<StoreProductResponse> _backupIKEAItems;
 		private ObservableCollection<StoreProductResponse> _iKEAItems;
-		private ObservableCollection<string> _itemCategories;
+		private ObservableCollection<IKEACategoryWrapper> _itemCategories;
 
 		public bool IsRefreshing
 		{
@@ -55,7 +56,7 @@ namespace LearningXamarin.ViewModels
             }
         }
 
-		public string CategorySelected
+		public IKEACategoryWrapper CategorySelected
 		{
 			get => _categorySelected;
 			set
@@ -100,7 +101,7 @@ namespace LearningXamarin.ViewModels
             }
         }
 
-		public ObservableCollection<string> ItemCategories
+		public ObservableCollection<IKEACategoryWrapper> ItemCategories
 		{
 			get => _itemCategories;
 			set
@@ -170,6 +171,7 @@ namespace LearningXamarin.ViewModels
 			IsRefreshing = true;
 
 			await ExecuteGetDataFromAPIService();
+            await GetProductCategories();
 
 			IsRefreshing = false;
         }
@@ -192,7 +194,17 @@ namespace LearningXamarin.ViewModels
 
 			if (restResponse.IsSuccessful && restResponse.Data != null)
 			{
-				ItemCategories = new ObservableCollection<string>(restResponse.Data);
+				//ItemCategories = new ObservableCollection<string>(restResponse.Data);
+				ItemCategories = new ObservableCollection<IKEACategoryWrapper>();
+
+				foreach (var category in restResponse.Data)
+				{
+					ItemCategories.Add(new IKEACategoryWrapper
+					{
+						Category = category,
+						IsSelected = false,
+					});
+				}
             }
         }
 
@@ -216,19 +228,21 @@ namespace LearningXamarin.ViewModels
             }
 
 			IsBusy = true;
+			DeselectAllCategories();
+			HighlightSelectCategory();
 
-			//Filtrar mi lista por categoria de la manera "larga"
-			//List<StoreProductResponse> filteredList = new List<StoreProductResponse>();
-			//foreach (var item in _backupIKEAItems)
-			//{
-			//	if (item.Category == CategorySelected)
-			//	{
-			//		filteredList.Add(item);
-			//	}
-			//}
+            //Filtrar mi lista por categoria de la manera "larga"
+            //List<StoreProductResponse> filteredList = new List<StoreProductResponse>();
+            //foreach (var item in _backupIKEAItems)
+            //{
+            //	if (item.Category == CategorySelected)
+            //	{
+            //		filteredList.Add(item);
+            //	}
+            //}
 
-			//Filtrar mi lista por categoria de la manera "corta"
-			var filteredList = _backupIKEAItems.Where(item => item.Category == CategorySelected);
+            //Filtrar mi lista por categoria de la manera "corta"
+            var filteredList = _backupIKEAItems.Where(item => item.Category == CategorySelected.Category);
 			//Usar _backupIKEAItems para siempre tener una lista con 
 			//los items completos obtenidos en el endpoint
 
@@ -237,6 +251,19 @@ namespace LearningXamarin.ViewModels
 			CategorySelected = null;
 
 			IsBusy = false;
+        }
+
+		private void HighlightSelectCategory()
+		{
+			CategorySelected.IsSelected = true;
+        }
+
+		private void DeselectAllCategories()
+		{
+			foreach (var cat in ItemCategories)
+			{
+				cat.IsSelected = false;
+			}
         }
 	}
 }
