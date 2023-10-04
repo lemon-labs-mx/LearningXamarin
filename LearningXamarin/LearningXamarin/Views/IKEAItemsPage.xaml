@@ -13,7 +13,7 @@
     BackgroundColor="{x:StaticResource BackgroundWhite}">
 
     <Grid
-        RowDefinitions="30, 35, *">
+        RowDefinitions="30, 60, 35, *">
         <!--Welcome message-->
         <Label>
             <Label.FormattedText>
@@ -25,18 +25,42 @@
                         Text="{Binding Username}"
                         FontSize="Large"
                         FontAttributes="Italic"/>
-                    <Span
-                        Text="{x:Static icons:IconConstants.SearchIcon}"
-                        TextColor="Black"
-                        FontSize="Large"
-                        FontFamily="FASolid"/>
                 </FormattedString>
             </Label.FormattedText>
         </Label>
 
+        <!--Search Bar and Filter-->
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="75*, 25*"
+            ColumnSpacing="10"
+            Margin="10">
+
+            <SearchBar
+                x:Name="searchBar"
+                Placeholder="Search Product"
+                BackgroundColor="{x:StaticResource LightestGray}"
+                SearchCommand="{Binding SearchCommand}"
+                SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+
+            <Frame
+                Grid.Column="1"
+                Padding="0"
+                CornerRadius="5"
+                BackgroundColor="Black">
+                <Label
+                    Text="{x:Static icons:IconConstants.SettingsIcon}"
+                    TextColor="White"
+                    FontFamily="FASolid"
+                    FontSize="Large"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"/>
+            </Frame>
+        </Grid>
+
         <!--Categories-->
         <CollectionView
-            Grid.Row="1"
+            Grid.Row="2"
             ItemsSource="{Binding ItemCategories}"
             SelectionMode="Single"
             SelectedItem="{Binding CategorySelected}"
@@ -78,7 +102,7 @@
 
         <!--Products-->
         <RefreshView
-            Grid.Row="2"
+            Grid.Row="3"
             IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
             Command="{Binding RefreshViewCommand}">
             <CollectionView
@@ -147,7 +171,7 @@
         </RefreshView>
 
         <ActivityIndicator
-            Grid.RowSpan="3"
+            Grid.RowSpan="4"
             IsVisible="{Binding IsBusy}"
             Style="{x:StaticResource BaseActivityIndicator}"/>
 

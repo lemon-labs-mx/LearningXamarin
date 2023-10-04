@@ -126,6 +126,8 @@ namespace LearningXamarin.ViewModels
 
 		public ICommand CategorySelectedCommand { get; set; }
 
+		public ICommand SearchCommand { get; set; }
+
 		public IKEAItemsViewModel(INavigation navigation, string username)
 		{
 			_navigationService = navigation;
@@ -144,6 +146,7 @@ namespace LearningXamarin.ViewModels
 			GetDataFromAPIService = new Command(async () => await ExecuteGetDataFromAPIService());
 			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
 			CategorySelectedCommand = new Command(ExecuteCategorySelectedCommand);
+			SearchCommand = new Command<string>((searched) => ExecuteSearchCommand(searched));
         }
 
         private async Task ExecuteGetIKEAItemsCommand()
@@ -249,6 +252,28 @@ namespace LearningXamarin.ViewModels
 			IKEAItems = new ObservableCollection<StoreProductResponse>(filteredList);
 
 			CategorySelected = null;
+
+			IsBusy = false;
+        }
+
+		private void ExecuteSearchCommand(string textSearched)
+		{
+			if (IsBusy || string.IsNullOrEmpty(textSearched))
+			{
+				return;
+            }
+
+			IsBusy = true;
+
+			var textSearchedLowerCase = textSearched.ToLower();
+
+			var filteredList = _backupIKEAItems.Where(item =>
+			{
+				return item.Title.ToLower().Contains(textSearchedLowerCase)
+					|| item.Description.ToLower().Contains(textSearchedLowerCase);
+            });
+
+			IKEAItems = new ObservableCollection<StoreProductResponse>(filteredList);
 
 			IsBusy = false;
         }
