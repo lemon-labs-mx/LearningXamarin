@@ -9,6 +9,8 @@ using LearningXamarin.Models.Responses;
 using LearningXamarin.Models.Wrappers;
 using LearningXamarin.Services.APIClientService;
 using LearningXamarin.Views;
+using LearningXamarin.Views.PopupPages;
+using Rg.Plugins.Popup.Extensions;
 using Xamarin.Forms;
 
 namespace LearningXamarin.ViewModels
@@ -126,7 +128,9 @@ namespace LearningXamarin.ViewModels
 
 		public ICommand CategorySelectedCommand { get; set; }
 
-		public ICommand SearchCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+
+        public ICommand OrderItemsCommand { get; set; }
 
 		public IKEAItemsViewModel(INavigation navigation, string username)
 		{
@@ -144,6 +148,7 @@ namespace LearningXamarin.ViewModels
 			GetIKEAItemsCommand = new Command(async () => await ExecuteGetIKEAItemsCommand());
 			RefreshViewCommand = new Command(async () => await ExecuteRefreshViewCommand());
 			GetDataFromAPIService = new Command(async () => await ExecuteGetDataFromAPIService());
+			OrderItemsCommand = new Command(async () => await ExecuteOrderItemsCommand());
 			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
 			CategorySelectedCommand = new Command(ExecuteCategorySelectedCommand);
 			SearchCommand = new Command<string>((searched) => ExecuteSearchCommand(searched));
@@ -209,6 +214,12 @@ namespace LearningXamarin.ViewModels
 					});
 				}
             }
+        }
+
+        private async Task ExecuteOrderItemsCommand()
+        {
+            // Open a PopupPage
+            await _navigationService.PushPopupAsync(new OrderItemsPopupPage());
         }
 
 		private void ExecuteItemSelectedCommand()

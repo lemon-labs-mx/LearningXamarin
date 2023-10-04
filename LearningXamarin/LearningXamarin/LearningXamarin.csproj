@@ -33,6 +33,7 @@
     <None Remove="Helpers\" />
     <None Remove="Helpers\Constants\" />
     <None Remove="Models\Wrappers\" />
+    <None Remove="Views\PopupPages\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -47,6 +48,7 @@
     <Folder Include="Helpers\" />
     <Folder Include="Helpers\Constants\" />
     <Folder Include="Models\Wrappers\" />
+    <Folder Include="Views\PopupPages\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />

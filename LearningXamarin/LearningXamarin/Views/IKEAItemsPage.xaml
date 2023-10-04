@@ -55,6 +55,11 @@
                     FontSize="Large"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"/>
+
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding OrderItemsCommand}"/>
+                </Frame.GestureRecognizers>
             </Frame>
         </Grid>
 
