@@ -34,6 +34,8 @@
     <None Remove="Helpers\Constants\" />
     <None Remove="Models\Wrappers\" />
     <None Remove="Views\PopupPages\" />
+    <None Remove="Controls\" />
+    <None Remove="Controls\UIControls\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -49,6 +51,8 @@
     <Folder Include="Helpers\Constants\" />
     <Folder Include="Models\Wrappers\" />
     <Folder Include="Views\PopupPages\" />
+    <Folder Include="Controls\" />
+    <Folder Include="Controls\UIControls\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />

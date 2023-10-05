@@ -3,15 +3,31 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:controls="clr-namespace:LearningXamarin.Controls.UIControls"
     x:Class="LearningXamarin.Views.PopupPages.OrderItemsPopupPage">
     <StackLayout 
-        BackgroundColor="Pink"
+        BackgroundColor="White"
         HeightRequest="200"
-        WidthRequest="150"
         VerticalOptions="Center" 
         HorizontalOptions="Center" 
-        Padding="20, 20, 20, 20">
+        Margin="20, 0"
+        Padding="20">
         <Label
-            Text="Test"/>
+            Text="Sort By"
+            TextColor="{x:StaticResource DarkGray}"
+            Margin="0, 8"/>
+
+        <controls:OrderByOptionControl
+            Title="Default"
+            IsSelected="True"/>
+
+        <controls:OrderByOptionControl
+            Title="Price: Low to High"/>
+
+        <controls:OrderByOptionControl
+            Title="Price: High to Low"/>
+
+        <controls:OrderByOptionControl
+            Title="Top Rated"/>
     </StackLayout>
 </popup:PopupPage>

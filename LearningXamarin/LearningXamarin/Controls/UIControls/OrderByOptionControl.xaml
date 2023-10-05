@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="LearningXamarin.Controls.UIControls.OrderByOptionControl"
+    ColumnDefinitions="*, 30"
+    x:Name="controlReference">
+    <Label
+        Text="{Binding Title, Source={x:Reference controlReference}}"
+        HorizontalOptions="Start"/>
+    <CheckBox
+        Grid.Column="1"
+        IsChecked="{Binding IsSelected, Source={x:Reference controlReference}}"/>
+</Grid>
