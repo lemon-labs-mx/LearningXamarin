@@ -4,7 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:controls="clr-namespace:LearningXamarin.Controls.UIControls"
-    x:Class="LearningXamarin.Views.PopupPages.OrderItemsPopupPage">
+    x:Class="LearningXamarin.Views.PopupPages.OrderItemsPopupPage"
+    CloseWhenBackgroundIsClicked="False"
+    x:Name="popupReference">
+
     <StackLayout 
         BackgroundColor="White"
         HeightRequest="200"
@@ -18,16 +21,36 @@
             Margin="0, 8"/>
 
         <controls:OrderByOptionControl
+            x:Name="defaultState"
             Title="Default"
-            IsSelected="True"/>
+            IsSelected="True"
+            CurrentState="Default"
+            CheckBoxChangedCommand="{Binding OptionSelectedCommand,
+                Source={x:Reference popupReference}}">
+        </controls:OrderByOptionControl>
 
         <controls:OrderByOptionControl
-            Title="Price: Low to High"/>
+            x:Name="lowToHighState"
+            Title="Price: Low to High"
+            CurrentState="LowToHigh"
+            CheckBoxChangedCommand="{Binding OptionSelectedCommand,
+                Source={x:Reference popupReference}}">
+        </controls:OrderByOptionControl>
 
         <controls:OrderByOptionControl
-            Title="Price: High to Low"/>
+            x:Name="highToLowState"
+            Title="Price: High to Low"
+            CurrentState="HighToLow"
+            CheckBoxChangedCommand="{Binding OptionSelectedCommand,
+                Source={x:Reference popupReference}}">
+        </controls:OrderByOptionControl>
 
         <controls:OrderByOptionControl
-            Title="Top Rated"/>
+            x:Name="topRatedState"
+            Title="Top Rated"
+            CurrentState="TopRated"
+            CheckBoxChangedCommand="{Binding OptionSelectedCommand,
+                Source={x:Reference popupReference}}">
+        </controls:OrderByOptionControl>
     </StackLayout>
 </popup:PopupPage>

@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using LearningXamarin.Models.Enums;
 using LearningXamarin.Models.Responses;
 using LearningXamarin.Models.Wrappers;
 using LearningXamarin.Services.APIClientService;
+using LearningXamarin.Services.PopupNavigationService;
 using LearningXamarin.Views;
 using LearningXamarin.Views.PopupPages;
 using Rg.Plugins.Popup.Extensions;
@@ -19,9 +21,11 @@ namespace LearningXamarin.ViewModels
 	{
 		private readonly INavigation _navigationService;
 		private readonly APIClientService _apiClientService;
+		private readonly PopupNavigationService _popupNavigationService;
 
 		private bool _isRefreshing;
 		private string _username;
+		private OrderByEnum _orderByCategorySelected;
 		private IKEACategoryWrapper _categorySelected;
 		private StoreProductResponse _selectedItem;
 		private List<StoreProductResponse> _backupIKEAItems;
@@ -130,12 +134,14 @@ namespace LearningXamarin.ViewModels
 
         public ICommand SearchCommand { get; set; }
 
-        public ICommand OrderItemsCommand { get; set; }
+        public ICommand OrderByItemsCommand { get; set; }
 
 		public IKEAItemsViewModel(INavigation navigation, string username)
 		{
 			_navigationService = navigation;
 			_apiClientService = new APIClientService();
+			_popupNavigationService = new PopupNavigationService();
+
 			Username = username;
 			CategorySelected = null;
 
@@ -148,7 +154,7 @@ namespace LearningXamarin.ViewModels
 			GetIKEAItemsCommand = new Command(async () => await ExecuteGetIKEAItemsCommand());
 			RefreshViewCommand = new Command(async () => await ExecuteRefreshViewCommand());
 			GetDataFromAPIService = new Command(async () => await ExecuteGetDataFromAPIService());
-			OrderItemsCommand = new Command(async () => await ExecuteOrderItemsCommand());
+			OrderByItemsCommand = new Command(async () => await ExecuteOrderByItemsCommand());
 			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
 			CategorySelectedCommand = new Command(ExecuteCategorySelectedCommand);
 			SearchCommand = new Command<string>((searched) => ExecuteSearchCommand(searched));
@@ -216,10 +222,59 @@ namespace LearningXamarin.ViewModels
             }
         }
 
-        private async Task ExecuteOrderItemsCommand()
+        private async Task ExecuteOrderByItemsCommand()
         {
-            // Open a PopupPage
-            await _navigationService.PushPopupAsync(new OrderItemsPopupPage());
+			// Open a PopupPage
+			//_orderByCategorySelected = ...;
+			if (IsBusy || !IKEAItems.Any())
+			{
+				return;
+            }
+
+			IsBusy = true;
+
+			var oldVal = _orderByCategorySelected;
+
+			_orderByCategorySelected = await _popupNavigationService.ShowOrderByPopup(_orderByCategorySelected);
+
+			if (_orderByCategorySelected == oldVal)
+			{
+				IsBusy = false;
+				return;
+            }
+
+			List<StoreProductResponse> itemsSorted = new List<StoreProductResponse>();
+
+			switch (_orderByCategorySelected)
+			{
+				case OrderByEnum.HighToLow:
+					itemsSorted = _backupIKEAItems
+						.OrderByDescending(items => items.Price)
+                        .ToList();
+					break;
+
+				case OrderByEnum.LowToHigh:
+					itemsSorted = _backupIKEAItems
+                        .OrderBy(items => items.Price)
+                        .ToList();
+					break;
+
+				case OrderByEnum.TopRated:
+					itemsSorted = _backupIKEAItems
+						.OrderBy(items => items.Rating.Rate)
+                        .ToList();
+					break;
+
+				case OrderByEnum.Default:
+				default:
+					IsBusy = false;
+					RefreshViewCommand.Execute(null);
+					return;
+			}
+
+			IKEAItems = new ObservableCollection<StoreProductResponse>(itemsSorted);
+
+			IsBusy = false;
         }
 
 		private void ExecuteItemSelectedCommand()

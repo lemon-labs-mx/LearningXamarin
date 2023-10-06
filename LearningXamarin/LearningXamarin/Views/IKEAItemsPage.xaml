@@ -58,7 +58,7 @@
 
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer
-                        Command="{Binding OrderItemsCommand}"/>
+                        Command="{Binding OrderByItemsCommand}"/>
                 </Frame.GestureRecognizers>
             </Frame>
         </Grid>

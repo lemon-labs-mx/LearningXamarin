@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using LearningXamarin.Models.Enums;
+using Xamarin.Forms;
 
 namespace LearningXamarin.Controls.UIControls
 {	
@@ -30,9 +31,41 @@ namespace LearningXamarin.Controls.UIControls
             set => SetValue(IsSelectedProperty, value);
         }
 
+        public static readonly BindableProperty CurrentStateProperty = BindableProperty
+            .Create(
+                nameof(CurrentState),
+                typeof(OrderByEnum),
+                typeof(OrderByOptionControl));
+
+        public OrderByEnum CurrentState
+        {
+            get => (OrderByEnum)GetValue(CurrentStateProperty);
+            set => SetValue(CurrentStateProperty, value);
+        }
+
+        public static readonly BindableProperty CheckBoxChangedCommandProperty = BindableProperty
+            .Create(
+                nameof(CheckBoxChangedCommand),
+                typeof(Command),
+                typeof(OrderByOptionControl));
+
+        public Command CheckBoxChangedCommand
+        {
+            get => (Command)GetValue(CheckBoxChangedCommandProperty);
+            set => SetValue(CheckBoxChangedCommandProperty, value);
+        }
+
         public OrderByOptionControl()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
-	}
+
+        public void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (IsSelected)
+            {
+                CheckBoxChangedCommand?.Execute(CurrentState);
+            }
+        }
+    }
 }

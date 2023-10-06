@@ -36,6 +36,8 @@
     <None Remove="Views\PopupPages\" />
     <None Remove="Controls\" />
     <None Remove="Controls\UIControls\" />
+    <None Remove="Services\PopupNavigationService\" />
+    <None Remove="Models\Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -53,6 +55,8 @@
     <Folder Include="Views\PopupPages\" />
     <Folder Include="Controls\" />
     <Folder Include="Controls\UIControls\" />
+    <Folder Include="Services\PopupNavigationService\" />
+    <Folder Include="Models\Enums\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />

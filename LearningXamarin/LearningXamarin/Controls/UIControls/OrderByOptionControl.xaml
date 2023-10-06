@@ -10,5 +10,7 @@
         HorizontalOptions="Start"/>
     <CheckBox
         Grid.Column="1"
-        IsChecked="{Binding IsSelected, Source={x:Reference controlReference}}"/>
+        IsChecked="{Binding IsSelected,
+            Source={x:Reference controlReference}}"
+        CheckedChanged="CheckBox_CheckedChanged"/>
 </Grid>
