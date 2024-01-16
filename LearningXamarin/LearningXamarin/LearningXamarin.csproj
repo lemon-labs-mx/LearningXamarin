@@ -38,6 +38,9 @@
     <None Remove="Controls\UIControls\" />
     <None Remove="Services\PopupNavigationService\" />
     <None Remove="Models\Enums\" />
+    <None Remove="Images\" />
+    <None Remove="Images\android.png" />
+    <None Remove="Images\iOs.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -57,9 +60,12 @@
     <Folder Include="Controls\UIControls\" />
     <Folder Include="Services\PopupNavigationService\" />
     <Folder Include="Models\Enums\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
+    <EmbeddedResource Include="Images\android.png" />
+    <EmbeddedResource Include="Images\iOs.png" />
   </ItemGroup>
 </Project>

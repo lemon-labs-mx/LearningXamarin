@@ -9,7 +9,7 @@
     BackgroundColor="{x:StaticResource BackgroundWhite}"
     Padding="10, 40">
     <Grid
-        RowDefinitions="70, 30, 60, 30, 60, 50, 40">
+        RowDefinitions="70, 30, 60, 30, 60, 50, 40, *">
 
         <!-- Login -->
         <Label
@@ -54,6 +54,13 @@
             WidthRequest="250"
             HorizontalOptions="Center"
             Style="{x:StaticResource SecondaryButtonStyle}"/>
+
+        <Image
+            x:Name="icon"
+            Grid.Row="7"
+            WidthRequest="100"
+            HeightRequest="100"
+            />
     </Grid>
 </ContentPage>
 

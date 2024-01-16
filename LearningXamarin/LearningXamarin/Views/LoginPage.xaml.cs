@@ -9,6 +9,7 @@ namespace LearningXamarin.Views
 		{
 			InitializeComponent();
 			BindingContext = new LoginViewModel(Navigation);
+			icon.Source = ImageSource.FromResource("LearningXamarin.Images.android.png");
 		}
 	}
 }
