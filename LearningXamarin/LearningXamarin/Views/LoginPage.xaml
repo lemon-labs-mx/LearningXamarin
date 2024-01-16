@@ -55,12 +55,15 @@
             HorizontalOptions="Center"
             Style="{x:StaticResource SecondaryButtonStyle}"/>
 
+        <!--Image-->
+        <!--Creates an image, the source is set from the code behind-->
         <Image
             x:Name="icon"
             Grid.Row="7"
+            Aspect="AspectFit"
             WidthRequest="100"
             HeightRequest="100"
-            />
+            VerticalOptions="End"/>
     </Grid>
 </ContentPage>
 
