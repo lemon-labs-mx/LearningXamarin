@@ -41,6 +41,7 @@
     <None Remove="Images\" />
     <None Remove="Images\android.png" />
     <None Remove="Images\iOs.png" />
+    <None Remove="Images\no-internet.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -67,5 +68,6 @@
     <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
     <EmbeddedResource Include="Images\android.png" />
     <EmbeddedResource Include="Images\iOs.png" />
+    <EmbeddedResource Include="Images\no-internet.png" />
   </ItemGroup>
 </Project>
