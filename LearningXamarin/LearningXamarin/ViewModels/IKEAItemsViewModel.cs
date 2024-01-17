@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,8 +10,6 @@ using LearningXamarin.Models.Wrappers;
 using LearningXamarin.Services.APIClientService;
 using LearningXamarin.Services.PopupNavigationService;
 using LearningXamarin.Views;
-using LearningXamarin.Views.PopupPages;
-using Rg.Plugins.Popup.Extensions;
 using Xamarin.Forms;
 
 namespace LearningXamarin.ViewModels
@@ -23,8 +20,18 @@ namespace LearningXamarin.ViewModels
 		private readonly APIClientService _apiClientService;
 		private readonly PopupNavigationService _popupNavigationService;
 
+		//L1 - Setitng the default values of the emtpy view
+		private string _defaultEmptyViewMessage = "No Data Found!";
+		private ImageSource _defaultEmptyViewImage = new Uri("https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678069-sign-error-512.png");
+
+		//L1 - Setting the values when no internet connection is detected
+		private string _noInternetEmptyViewMessage = "No Internet Connection!";
+		private ImageSource _noInternetEmptyViewImage = ImageSource.FromResource("LearningXamarin.Images.no-internet.png");
+
 		private bool _isRefreshing;
 		private string _username;
+		private string _emptyViewMessage;
+		private ImageSource _emptyViewImage;
 		private OrderByEnum _orderByCategorySelected;
 		private IKEACategoryWrapper _categorySelected;
 		private StoreProductResponse _selectedItem;
@@ -59,6 +66,38 @@ namespace LearningXamarin.ViewModels
 
 				_username = value;
 				OnPropertyChanged(nameof(Username));
+            }
+        }
+
+		//L1 - Binds the empty view message
+		public string EmptyViewMessage
+		{
+			get => _emptyViewMessage;
+			set
+			{
+				if (value == _emptyViewMessage || value == null)
+				{
+					return;
+                }
+
+				_emptyViewMessage = value;
+				OnPropertyChanged(nameof(EmptyViewMessage));
+            }
+        }
+
+		//L1 - Binds the empty view image source
+		public ImageSource EmptyViewImage
+		{
+			get => _emptyViewImage;
+			set
+			{
+				if (value == _emptyViewImage || value == null)
+				{
+					return;
+                }
+
+				_emptyViewImage = value;
+				OnPropertyChanged(nameof(EmptyViewImage));
             }
         }
 
@@ -142,8 +181,15 @@ namespace LearningXamarin.ViewModels
 			_apiClientService = new APIClientService();
 			_popupNavigationService = new PopupNavigationService();
 
+			//The observable collections (and lists) are null by default
+			IKEAItems = new ObservableCollection<StoreProductResponse>();
+			ItemCategories = new ObservableCollection<IKEACategoryWrapper>();
+
 			Username = username;
 			CategorySelected = null;
+			//L1 - Sets the default message for empty view
+			EmptyViewMessage = _defaultEmptyViewMessage;
+			EmptyViewImage = _defaultEmptyViewImage;
 
 			InitializeCommands();
 			GetIKEAItemsCommand.Execute(null);
@@ -169,6 +215,32 @@ namespace LearningXamarin.ViewModels
 
 			IsBusy = true;
 
+			//L1 - Remember, this propety is in the BaseViewModel, this class inherits from Base,
+			//so you can access its public properties and methods
+			if (!HasInternetConnection)
+			{
+				//If the Ikea items list has any item, clear all of its items
+				if (IKEAItems.Any())
+				{
+					IKEAItems.Clear();
+                }
+
+				//If the item categories list has any item, clear all of its items
+				if (ItemCategories.Any())
+				{
+					ItemCategories.Clear();
+                }
+
+				//Show the no internet connection error
+				EmptyViewMessage = _noInternetEmptyViewMessage;
+				EmptyViewImage = _noInternetEmptyViewImage;
+
+				//Remember to set the property to false here!
+				//The return statement will prevent the IsBusy to deactivate
+				IsBusy = false;
+				return;
+            }
+
 			await ExecuteGetDataFromAPIService();
             await GetProductCategories();
 
@@ -183,6 +255,32 @@ namespace LearningXamarin.ViewModels
             }
 
 			IsRefreshing = true;
+
+			//L1 - Remember, this propety is in the BaseViewModel, this class inherits from Base,
+			//so you can access its public properties and methods
+			if (!HasInternetConnection)
+			{
+				//If the Ikea items list has any item, clear all of its items
+				if (IKEAItems.Any())
+				{
+					IKEAItems.Clear();
+                }
+
+				//If the item categories list has any item, clear all of its items
+				if (ItemCategories.Any())
+				{
+					ItemCategories.Clear();
+                }
+
+				//Show the no internet connection error
+				EmptyViewMessage = _noInternetEmptyViewMessage;
+				EmptyViewImage = _noInternetEmptyViewImage;
+
+				//Remember to set the property to false here!
+				//The return statement will prevent the IsRefreshing to deactivate
+				IsRefreshing = false;
+				return;
+            }
 
 			await ExecuteGetDataFromAPIService();
             await GetProductCategories();
@@ -199,7 +297,14 @@ namespace LearningXamarin.ViewModels
 				//Inizializando la propiedad IKEAItems para despues meterle datos
 				IKEAItems = new ObservableCollection<StoreProductResponse>(restResponse.Data);
 				_backupIKEAItems = restResponse.Data;
+				//Added the return statement here so the code won't show the emtpy view
+				return;
 			}
+
+			//If the rest response is not success or the data is null,
+            //show the default empty view message
+			EmptyViewMessage = _defaultEmptyViewMessage;
+			EmptyViewImage = _defaultEmptyViewImage;
         }
 
         private async Task GetProductCategories()

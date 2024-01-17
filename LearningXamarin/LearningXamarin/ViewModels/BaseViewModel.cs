@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace LearningXamarin.ViewModels
 {
@@ -19,6 +20,15 @@ namespace LearningXamarin.ViewModels
 				_isBusy = value;
 				OnPropertyChanged(nameof(IsBusy));
             }
+        }
+
+		//L1 - Add a property to check if the user has internet connection
+		//using Xamarin.Essentials
+		public bool HasInternetConnection => IsNetworkConnected();
+
+        private bool IsNetworkConnected()
+        {
+			return Connectivity.NetworkAccess == NetworkAccess.Internet;
         }
 	}
 }

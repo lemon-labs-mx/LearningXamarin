@@ -161,14 +161,16 @@
 
                 <CollectionView.EmptyView>
                     <StackLayout>
+                        <!--L1 - Changing the message and the image from the VM-->
                         <Label
-                            Text="Not data found!"
+                            Text="{Binding EmptyViewMessage}"
                             FontSize="Large"
                             FontAttributes="Bold"
                             TextColor="{x:StaticResource Red}"
                             HorizontalOptions="Center"/>
                         <Image
-                            Source="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678069-sign-error-512.png" />
+                            Source="{Binding EmptyViewImage}"
+                            VerticalOptions="Center" />
                     </StackLayout>
                 </CollectionView.EmptyView>
 
