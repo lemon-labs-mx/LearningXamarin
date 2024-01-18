@@ -18,8 +18,8 @@ These are the proposed themes, you can edit this file in your own repo to check 
 
 | Theme | Branch |  
 | ----------- | ----------- |  
-| Xamarin.Essentials | |
-| Styles | |
+| Xamarin.Essentials | L1-Essentials |
+| App Life Cycle/Page events | |
 | Shell Navigation | |
 | Detecting screen rotations/Adaptative UI | |
 | Triggers | |
