@@ -14,7 +14,7 @@ using Xamarin.Forms;
 
 namespace LearningXamarin.ViewModels
 {
-    public class IKEAItemsViewModel : BaseViewModel
+	public class IKEAItemsViewModel : BaseViewModel
 	{
 		private readonly INavigation _navigationService;
 		private readonly APIClientService _apiClientService;
@@ -47,12 +47,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _isRefreshing)
 				{
 					return;
-                }
+				}
 
 				_isRefreshing = value;
 				OnPropertyChanged(nameof(IsRefreshing));
-            }
-        }
+			}
+		}
 
 		public string Username
 		{
@@ -62,12 +62,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _username || value == null)
 				{
 					return;
-                }
+				}
 
 				_username = value;
 				OnPropertyChanged(nameof(Username));
-            }
-        }
+			}
+		}
 
 		//L1 - Binds the empty view message
 		public string EmptyViewMessage
@@ -78,12 +78,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _emptyViewMessage || value == null)
 				{
 					return;
-                }
+				}
 
 				_emptyViewMessage = value;
 				OnPropertyChanged(nameof(EmptyViewMessage));
-            }
-        }
+			}
+		}
 
 		//L1 - Binds the empty view image source
 		public ImageSource EmptyViewImage
@@ -94,12 +94,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _emptyViewImage || value == null)
 				{
 					return;
-                }
+				}
 
 				_emptyViewImage = value;
 				OnPropertyChanged(nameof(EmptyViewImage));
-            }
-        }
+			}
+		}
 
 		public IKEACategoryWrapper CategorySelected
 		{
@@ -109,12 +109,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _categorySelected)
 				{
 					return;
-                }
+				}
 
 				_categorySelected = value;
 				OnPropertyChanged(nameof(CategorySelected));
-            }
-        }
+			}
+		}
 
 		public StoreProductResponse SelectedItem
 		{
@@ -124,12 +124,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _selectedItem)
 				{
 					return;
-                }
+				}
 
 				_selectedItem = value;
 				OnPropertyChanged(nameof(SelectedItem));
-            }
-        }
+			}
+		}
 
 		public ObservableCollection<StoreProductResponse> IKEAItems
 		{
@@ -139,12 +139,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _iKEAItems)
 				{
 					return;
-                }
+				}
 
 				_iKEAItems = value;
 				OnPropertyChanged(nameof(IKEAItems));
-            }
-        }
+			}
+		}
 
 		public ObservableCollection<IKEACategoryWrapper> ItemCategories
 		{
@@ -154,12 +154,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _itemCategories)
 				{
 					return;
-                }
+				}
 
 				_itemCategories = value;
 				OnPropertyChanged(nameof(ItemCategories));
-            }
-        }
+			}
+		}
 
 		public ICommand GetIKEAItemsCommand { get; set; }
 
@@ -171,13 +171,16 @@ namespace LearningXamarin.ViewModels
 
 		public ICommand CategorySelectedCommand { get; set; }
 
-        public ICommand SearchCommand { get; set; }
+		public ICommand SearchCommand { get; set; }
 
-        public ICommand OrderByItemsCommand { get; set; }
+		public ICommand OrderByItemsCommand { get; set; }
 
-		public IKEAItemsViewModel(INavigation navigation, string username)
+		//L3 - Remove the navigation service, also, remove the parameter
+		public IKEAItemsViewModel()
 		{
-			_navigationService = navigation;
+			//L3 - We are not using the INavigation service,
+			//we are going to use the AppShell navigation
+			//_navigationService = navigation;
 			_apiClientService = new APIClientService();
 			_popupNavigationService = new PopupNavigationService();
 
@@ -185,7 +188,9 @@ namespace LearningXamarin.ViewModels
 			IKEAItems = new ObservableCollection<StoreProductResponse>();
 			ItemCategories = new ObservableCollection<IKEACategoryWrapper>();
 
-			Username = username;
+			//L3 - We are not going to get the parameter from the constructor,
+			//check the method ApplyQueryAttribute
+			//Username = username;
 			CategorySelected = null;
 			//L1 - Sets the default message for empty view
 			EmptyViewMessage = _defaultEmptyViewMessage;
@@ -193,6 +198,17 @@ namespace LearningXamarin.ViewModels
 
 			InitializeCommands();
 			GetIKEAItemsCommand.Execute(null);
+		}
+
+		//L3 - Override the Apply Query method to use a custom behaviour
+		public override void ApplyQueryAttributes(IDictionary<string, string> query)
+		{
+			//L3 - We are checking if the key "username" was sent
+			if (query.ContainsKey("username"))
+			{
+				//If so, get the value
+				Username = query["username"];
+			}
 		}
 
 		private void InitializeCommands()
@@ -204,14 +220,14 @@ namespace LearningXamarin.ViewModels
 			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
 			CategorySelectedCommand = new Command(ExecuteCategorySelectedCommand);
 			SearchCommand = new Command<string>((searched) => ExecuteSearchCommand(searched));
-        }
+		}
 
-        private async Task ExecuteGetIKEAItemsCommand()
+		private async Task ExecuteGetIKEAItemsCommand()
 		{
 			if (IsBusy)
 			{
 				return;
-            }
+			}
 
 			IsBusy = true;
 
@@ -223,13 +239,13 @@ namespace LearningXamarin.ViewModels
 				if (IKEAItems.Any())
 				{
 					IKEAItems.Clear();
-                }
+				}
 
 				//If the item categories list has any item, clear all of its items
 				if (ItemCategories.Any())
 				{
 					ItemCategories.Clear();
-                }
+				}
 
 				//Show the no internet connection error
 				EmptyViewMessage = _noInternetEmptyViewMessage;
@@ -239,20 +255,20 @@ namespace LearningXamarin.ViewModels
 				//The return statement will prevent the IsBusy to deactivate
 				IsBusy = false;
 				return;
-            }
+			}
 
 			await ExecuteGetDataFromAPIService();
-            await GetProductCategories();
+			await GetProductCategories();
 
 			IsBusy = false;
-        }
+		}
 
-        private async Task ExecuteRefreshViewCommand()
+		private async Task ExecuteRefreshViewCommand()
 		{
 			if (IsRefreshing)
 			{
 				return;
-            }
+			}
 
 			IsRefreshing = true;
 
@@ -264,13 +280,13 @@ namespace LearningXamarin.ViewModels
 				if (IKEAItems.Any())
 				{
 					IKEAItems.Clear();
-                }
+				}
 
 				//If the item categories list has any item, clear all of its items
 				if (ItemCategories.Any())
 				{
 					ItemCategories.Clear();
-                }
+				}
 
 				//Show the no internet connection error
 				EmptyViewMessage = _noInternetEmptyViewMessage;
@@ -280,13 +296,13 @@ namespace LearningXamarin.ViewModels
 				//The return statement will prevent the IsRefreshing to deactivate
 				IsRefreshing = false;
 				return;
-            }
+			}
 
 			await ExecuteGetDataFromAPIService();
-            await GetProductCategories();
+			await GetProductCategories();
 
 			IsRefreshing = false;
-        }
+		}
 
 		private async Task ExecuteGetDataFromAPIService()
 		{
@@ -302,13 +318,13 @@ namespace LearningXamarin.ViewModels
 			}
 
 			//If the rest response is not success or the data is null,
-            //show the default empty view message
+			//show the default empty view message
 			EmptyViewMessage = _defaultEmptyViewMessage;
 			EmptyViewImage = _defaultEmptyViewImage;
-        }
+		}
 
-        private async Task GetProductCategories()
-        {
+		private async Task GetProductCategories()
+		{
 			var restResponse = await _apiClientService.GetCategories();
 
 			if (restResponse.IsSuccessful && restResponse.Data != null)
@@ -324,17 +340,17 @@ namespace LearningXamarin.ViewModels
 						IsSelected = false,
 					});
 				}
-            }
-        }
+			}
+		}
 
-        private async Task ExecuteOrderByItemsCommand()
-        {
+		private async Task ExecuteOrderByItemsCommand()
+		{
 			// Open a PopupPage
 			//_orderByCategorySelected = ...;
 			if (IsBusy || !IKEAItems.Any())
 			{
 				return;
-            }
+			}
 
 			IsBusy = true;
 
@@ -346,7 +362,7 @@ namespace LearningXamarin.ViewModels
 			{
 				IsBusy = false;
 				return;
-            }
+			}
 
 			List<StoreProductResponse> itemsSorted = new List<StoreProductResponse>();
 
@@ -355,19 +371,19 @@ namespace LearningXamarin.ViewModels
 				case OrderByEnum.HighToLow:
 					itemsSorted = _backupIKEAItems
 						.OrderByDescending(items => items.Price)
-                        .ToList();
+						.ToList();
 					break;
 
 				case OrderByEnum.LowToHigh:
 					itemsSorted = _backupIKEAItems
-                        .OrderBy(items => items.Price)
-                        .ToList();
+						.OrderBy(items => items.Price)
+						.ToList();
 					break;
 
 				case OrderByEnum.TopRated:
 					itemsSorted = _backupIKEAItems
 						.OrderBy(items => items.Rating.Rate)
-                        .ToList();
+						.ToList();
 					break;
 
 				case OrderByEnum.Default:
@@ -380,43 +396,43 @@ namespace LearningXamarin.ViewModels
 			IKEAItems = new ObservableCollection<StoreProductResponse>(itemsSorted);
 
 			IsBusy = false;
-        }
+		}
 
 		private void ExecuteItemSelectedCommand()
 		{
 			if (SelectedItem == null)
 			{
 				return;
-            }
+			}
 
 			_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
 
 			SelectedItem = null;
-        }
+		}
 
-        private void ExecuteCategorySelectedCommand()
-        {
+		private void ExecuteCategorySelectedCommand()
+		{
 			if (CategorySelected == null || IsBusy)
 			{
 				return;
-            }
+			}
 
 			IsBusy = true;
 			DeselectAllCategories();
 			HighlightSelectCategory();
 
-            //Filtrar mi lista por categoria de la manera "larga"
-            //List<StoreProductResponse> filteredList = new List<StoreProductResponse>();
-            //foreach (var item in _backupIKEAItems)
-            //{
-            //	if (item.Category == CategorySelected)
-            //	{
-            //		filteredList.Add(item);
-            //	}
-            //}
+			//Filtrar mi lista por categoria de la manera "larga"
+			//List<StoreProductResponse> filteredList = new List<StoreProductResponse>();
+			//foreach (var item in _backupIKEAItems)
+			//{
+			//	if (item.Category == CategorySelected)
+			//	{
+			//		filteredList.Add(item);
+			//	}
+			//}
 
-            //Filtrar mi lista por categoria de la manera "corta"
-            var filteredList = _backupIKEAItems.Where(item => item.Category == CategorySelected.Category);
+			//Filtrar mi lista por categoria de la manera "corta"
+			var filteredList = _backupIKEAItems.Where(item => item.Category == CategorySelected.Category);
 			//Usar _backupIKEAItems para siempre tener una lista con 
 			//los items completos obtenidos en el endpoint
 
@@ -425,14 +441,14 @@ namespace LearningXamarin.ViewModels
 			CategorySelected = null;
 
 			IsBusy = false;
-        }
+		}
 
 		private void ExecuteSearchCommand(string textSearched)
 		{
 			if (IsBusy || string.IsNullOrEmpty(textSearched))
 			{
 				return;
-            }
+			}
 
 			IsBusy = true;
 
@@ -442,17 +458,17 @@ namespace LearningXamarin.ViewModels
 			{
 				return item.Title.ToLower().Contains(textSearchedLowerCase)
 					|| item.Description.ToLower().Contains(textSearchedLowerCase);
-            });
+			});
 
 			IKEAItems = new ObservableCollection<StoreProductResponse>(filteredList);
 
 			IsBusy = false;
-        }
+		}
 
 		private void HighlightSelectCategory()
 		{
 			CategorySelected.IsSelected = true;
-        }
+		}
 
 		private void DeselectAllCategories()
 		{
@@ -460,7 +476,7 @@ namespace LearningXamarin.ViewModels
 			{
 				cat.IsSelected = false;
 			}
-        }
+		}
 	}
 }
 

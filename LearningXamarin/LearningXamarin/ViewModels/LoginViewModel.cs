@@ -21,12 +21,12 @@ namespace LearningXamarin.ViewModels
 				if (value == _userName || value == null)
 				{
 					return;
-                }
+				}
 
 				_userName = value;
 				OnPropertyChanged(nameof(UserName));
-            }
-        }
+			}
+		}
 
 		public string PasswordText
 		{
@@ -36,14 +36,14 @@ namespace LearningXamarin.ViewModels
 				if (value == _passwordText || value == null)
 				{
 					return;
-                }
+				}
 
 				_passwordText = value;
 				OnPropertyChanged(nameof(PasswordText));
-            }
-        }
+			}
+		}
 
-        public ICommand LoginCommand { get; set; }
+		public ICommand LoginCommand { get; set; }
 		public ICommand SyncCommand { get; set; }
 
 		public LoginViewModel(INavigation navigation)
@@ -59,24 +59,29 @@ namespace LearningXamarin.ViewModels
 
 			//Sync Command
 			SyncCommand = new Command(ExecuteSyncCommand);
-        }
+		}
 
-        private void ExecuteSyncCommand()
-        {
+		private void ExecuteSyncCommand()
+		{
 			Console.WriteLine("Hello!");
 			UserName = "Adios!";
-        }
+		}
 
-        private async Task ExecuteLoginCommand()
+		private async Task ExecuteLoginCommand()
 		{
 			if (UserName == null || PasswordText == null)
 			{
 				//TODO: Show error message
 				return;
-            }
+			}
 
-			await _navigationService.PushAsync(new IKEAItemsPage(UserName));
-        }
+			//L3 - Comment this navigation, use shell instead
+			//await _navigationService.PushAsync(new IKEAItemsPage(UserName));
+
+			//L3 - The string format is "{route} ? paramName = {yourCustomParam}"
+			//Send the Username parameter
+			await Shell.Current.GoToAsync($"/{nameof(IKEAItemsPage)}?username={UserName}");
+		}
 	}
 }
 
