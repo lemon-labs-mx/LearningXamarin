@@ -20,7 +20,7 @@ These are the proposed themes, you can edit this file in your own repo to check 
 | ----------- | ----------- |  
 | Xamarin.Essentials | L1-Essentials |
 | App Life Cycle/Page events | |
-| Shell Navigation | |
+| Shell Navigation | L3-Shell |
 | Detecting screen rotations/Adaptative UI | |
 | Triggers | |
 | Cusotm controls | |
