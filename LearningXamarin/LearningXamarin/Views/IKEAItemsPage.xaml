@@ -2,12 +2,15 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:vm="clr-namespace:LearningXamarin.ViewModels"
     xmlns:models="clr-namespace:LearningXamarin.Models"
     xmlns:icons="clr-namespace:LearningXamarin.Helpers.Constants"
     x:DataType="vm:IKEAItemsViewModel"
     x:Class="LearningXamarin.Views.IKEAItemsPage"
     Title="My Online Store"
+    ios:Page.UseSafeArea="True"
+    Shell.NavBarIsVisible="False"
     NavigationPage.HasBackButton="False"
     Padding="5,20,0,0"
     BackgroundColor="{x:StaticResource BackgroundWhite}">

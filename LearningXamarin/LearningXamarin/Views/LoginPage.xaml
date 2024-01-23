@@ -5,6 +5,7 @@
     xmlns:vm="clr-namespace:LearningXamarin.ViewModels"
     x:DataType="vm:LoginViewModel"
     x:Class="LearningXamarin.Views.LoginPage"
+    Shell.NavBarIsVisible="False"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="{x:StaticResource BackgroundWhite}"
     Padding="10, 40">
