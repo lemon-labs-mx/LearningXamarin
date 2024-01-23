@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="LearningXamarin.AppShell"
+    xmlns:views="clr-namespace:LearningXamarin.Views">
+    <ShellContent
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Shell.TabBarIsVisible="False"/>
+
+    <ShellContent
+        ContentTemplate="{DataTemplate views:IKEAItemsPage}"/>
+</Shell>
+
