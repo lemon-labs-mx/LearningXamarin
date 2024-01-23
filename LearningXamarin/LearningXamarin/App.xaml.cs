@@ -10,14 +10,25 @@ namespace LearningXamarin
         {
             InitializeComponent();
             ApplyAppResources();
+            RegisterRoutes();
 
-            MainPage = new NavigationPage(new LoginPage());
+            //L3 - Comment this
+            //MainPage = new NavigationPage(new LoginPage());
+            //Use this instead to use Shell
+            MainPage = new AppShell();
         }
 
         private void ApplyAppResources()
         {
             Resources.MergedDictionaries.Add(new Colors());
             Resources.MergedDictionaries.Add(new CustomStyles());
+        }
+
+        private void RegisterRoutes()
+        {
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(IKEAItemsPage), typeof(IKEAItemsPage));
+            Routing.RegisterRoute(nameof(IKEAItemDetailedPage), typeof(IKEAItemDetailedPage));
         }
 
         protected override void OnStart ()
