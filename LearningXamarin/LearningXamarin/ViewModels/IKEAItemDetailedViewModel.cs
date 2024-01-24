@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using LearningXamarin.Models.Responses;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -9,7 +10,7 @@ namespace LearningXamarin.ViewModels
     public class IKEAItemDetailedViewModel : BaseViewModel
 	{
 		private StoreProductResponse _item;
-		private List<string> _carouselViewData;
+		private ObservableCollection<string> _carouselViewData;
 
 		public StoreProductResponse Item
 		{
@@ -26,7 +27,7 @@ namespace LearningXamarin.ViewModels
 			}
         }
 
-		public List<string> CarouselViewData
+		public ObservableCollection<string> CarouselViewData
 		{
 			get => _carouselViewData;
 			set
@@ -44,7 +45,7 @@ namespace LearningXamarin.ViewModels
 		public IKEAItemDetailedViewModel()
 		{
 			//Item = itemModel;
-			CarouselViewData = new List<string>();
+			CarouselViewData = new ObservableCollection<string>();
 		}
 
         public override void ApplyQueryAttributes(IDictionary<string, string> query)
