@@ -34,6 +34,10 @@ namespace LearningXamarin.ViewModels
 		{
 		}
 
+		public virtual void OnNavigating<T>(T param)
+		{
+        }
+
 		private bool IsNetworkConnected()
 		{
 			return Connectivity.NetworkAccess == NetworkAccess.Internet;
