@@ -42,6 +42,7 @@
     <None Remove="Images\android.png" />
     <None Remove="Images\iOs.png" />
     <None Remove="Images\no-internet.png" />
+    <None Remove="Services\NavigationService\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -62,6 +63,7 @@
     <Folder Include="Services\PopupNavigationService\" />
     <Folder Include="Models\Enums\" />
     <Folder Include="Images\" />
+    <Folder Include="Services\NavigationService\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />
