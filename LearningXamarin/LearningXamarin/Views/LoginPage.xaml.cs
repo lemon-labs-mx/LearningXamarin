@@ -9,7 +9,7 @@ namespace LearningXamarin.Views
 		public LoginPage()
 		{
 			InitializeComponent();
-			BindingContext = new LoginViewModel(Navigation);
+			BindingContext = new LoginViewModel();
 			ChangeIcon();
 		}
 

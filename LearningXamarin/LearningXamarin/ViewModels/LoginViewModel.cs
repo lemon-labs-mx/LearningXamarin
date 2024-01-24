@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using LearningXamarin.Services.NavigationService;
 using LearningXamarin.Views;
 using Xamarin.Forms;
 
@@ -8,7 +9,7 @@ namespace LearningXamarin.ViewModels
 {
 	public class LoginViewModel : BaseViewModel
 	{
-		private readonly INavigation _navigationService;
+		private readonly NavigationService _navigationService;
 
 		private string _userName;
 		private string _passwordText;
@@ -46,10 +47,10 @@ namespace LearningXamarin.ViewModels
 		public ICommand LoginCommand { get; set; }
 		public ICommand SyncCommand { get; set; }
 
-		public LoginViewModel(INavigation navigation)
+		public LoginViewModel()
 		{
-			_navigationService = navigation;
 			InitializeCommands();
+			_navigationService = new NavigationService();
 		}
 
 		private void InitializeCommands()
@@ -80,7 +81,10 @@ namespace LearningXamarin.ViewModels
 
 			//L3 - The string format is "{route} ? paramName = {yourCustomParam}"
 			//Send the Username parameter
-			await Shell.Current.GoToAsync($"/{nameof(IKEAItemsPage)}?username={UserName}");
+			//await Shell.Current.GoToAsync($"/{nameof(IKEAItemsPage)}?username={UserName}");
+
+			//L4 - 
+			await _navigationService.NavigateTo($"{nameof(IKEAItemsPage)}", UserName);
 		}
 	}
 }

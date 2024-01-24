@@ -8,6 +8,7 @@ using LearningXamarin.Models.Enums;
 using LearningXamarin.Models.Responses;
 using LearningXamarin.Models.Wrappers;
 using LearningXamarin.Services.APIClientService;
+using LearningXamarin.Services.NavigationService;
 using LearningXamarin.Services.PopupNavigationService;
 using LearningXamarin.Views;
 using Newtonsoft.Json;
@@ -17,7 +18,7 @@ namespace LearningXamarin.ViewModels
 {
 	public class IKEAItemsViewModel : BaseViewModel
 	{
-		private readonly INavigation _navigationService;
+		private readonly NavigationService _navigationService;
 		private readonly APIClientService _apiClientService;
 		private readonly PopupNavigationService _popupNavigationService;
 
@@ -181,7 +182,7 @@ namespace LearningXamarin.ViewModels
 		{
 			//L3 - We are not using the INavigation service,
 			//we are going to use the AppShell navigation
-			//_navigationService = navigation;
+			_navigationService = new NavigationService();
 			_apiClientService = new APIClientService();
 			_popupNavigationService = new PopupNavigationService();
 
@@ -205,14 +206,19 @@ namespace LearningXamarin.ViewModels
 		public override void ApplyQueryAttributes(IDictionary<string, string> query)
 		{
 			//L3 - We are checking if the key "username" was sent
-			if (query.ContainsKey("username"))
-			{
-				//If so, get the value
-				Username = query["username"];
-			}
+			//if (query.ContainsKey("username"))
+			//{
+			//	//If so, get the value
+			//	Username = query["username"];
+			//}
 		}
 
-		private void InitializeCommands()
+        public override void OnNavigating<T>(T param)
+        {
+			Username = param.ToString();
+        }
+
+        private void InitializeCommands()
 		{
 			GetIKEAItemsCommand = new Command(async () => await ExecuteGetIKEAItemsCommand());
 			RefreshViewCommand = new Command(async () => await ExecuteRefreshViewCommand());
@@ -407,9 +413,10 @@ namespace LearningXamarin.ViewModels
 			}
 
 			//_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
-            var jsonStr = JsonConvert.SerializeObject(SelectedItem);
-			var escapedData = Uri.EscapeDataString(jsonStr);
-            await Shell.Current.GoToAsync($"/{nameof(IKEAItemDetailedPage)}?item={escapedData}");
+			//var jsonStr = JsonConvert.SerializeObject(SelectedItem);
+			//var escapedData = Uri.EscapeDataString(jsonStr);
+			//await Shell.Current.GoToAsync($"/{nameof(IKEAItemDetailedPage)}?item={escapedData}");
+			await _navigationService.NavigateTo($"{nameof(IKEAItemDetailedPage)}", SelectedItem);
 
             SelectedItem = null;
 		}

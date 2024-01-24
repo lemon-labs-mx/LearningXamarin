@@ -50,16 +50,25 @@ namespace LearningXamarin.ViewModels
 
         public override void ApplyQueryAttributes(IDictionary<string, string> query)
         {
-			if (query.ContainsKey("item"))
-			{
-				//Item = JsonConvert.DeserializeObject<StoreProductResponse>(query["item"]);
-				var unescapedData = Uri.UnescapeDataString(query["item"]);
-				Item = JsonConvert.DeserializeObject<StoreProductResponse>(unescapedData);
-				InitializeCarouselViewData();
-            }
-        }
+			//if (query.ContainsKey("item"))
+			//{
+			//	//Item = JsonConvert.DeserializeObject<StoreProductResponse>(query["item"]);
+			//	var unescapedData = Uri.UnescapeDataString(query["item"]);
+			//	Item = JsonConvert.DeserializeObject<StoreProductResponse>(unescapedData);
+				//InitializeCarouselViewData();
+			//}
+		}
 
-        private void InitializeCarouselViewData()
+		public override void OnNavigating<T>(T param)
+        {
+			if (param is StoreProductResponse product)
+			{
+				Item = product;
+				InitializeCarouselViewData();
+			}
+		}
+
+		private void InitializeCarouselViewData()
         {
 			//Prevenimos que si el usuario no agrego las imagenes
 			//nosotros no las mostremos
