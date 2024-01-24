@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LearningXamarin.Models.Responses;
+using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace LearningXamarin.ViewModels
 {
-    public class IKEAItemDetailedViewModel :BaseViewModel
+    public class IKEAItemDetailedViewModel : BaseViewModel
 	{
 		private StoreProductResponse _item;
 		private List<string> _carouselViewData;
@@ -38,12 +41,22 @@ namespace LearningXamarin.ViewModels
             }
         }
 
-		public IKEAItemDetailedViewModel(StoreProductResponse itemModel)
+		public IKEAItemDetailedViewModel()
 		{
-			Item = itemModel;
+			//Item = itemModel;
 			CarouselViewData = new List<string>();
-            InitializeCarouselViewData();
 		}
+
+        public override void ApplyQueryAttributes(IDictionary<string, string> query)
+        {
+			if (query.ContainsKey("item"))
+			{
+				//Item = JsonConvert.DeserializeObject<StoreProductResponse>(query["item"]);
+				var unescapedData = Uri.UnescapeDataString(query["item"]);
+				Item = JsonConvert.DeserializeObject<StoreProductResponse>(unescapedData);
+				InitializeCarouselViewData();
+            }
+        }
 
         private void InitializeCarouselViewData()
         {

@@ -6,10 +6,10 @@ namespace LearningXamarin.Views
 {
     public partial class IKEAItemDetailedPage : ContentPage
 	{	
-		public IKEAItemDetailedPage(StoreProductResponse model)
+		public IKEAItemDetailedPage()
 		{
 			InitializeComponent();
-			BindingContext = new IKEAItemDetailedViewModel(model);
+			BindingContext = new IKEAItemDetailedViewModel();
 		}
 	}
 }

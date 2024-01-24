@@ -10,6 +10,7 @@ using LearningXamarin.Models.Wrappers;
 using LearningXamarin.Services.APIClientService;
 using LearningXamarin.Services.PopupNavigationService;
 using LearningXamarin.Views;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace LearningXamarin.ViewModels
@@ -217,7 +218,7 @@ namespace LearningXamarin.ViewModels
 			RefreshViewCommand = new Command(async () => await ExecuteRefreshViewCommand());
 			GetDataFromAPIService = new Command(async () => await ExecuteGetDataFromAPIService());
 			OrderByItemsCommand = new Command(async () => await ExecuteOrderByItemsCommand());
-			ItemSelectedCommand = new Command(ExecuteItemSelectedCommand);
+			ItemSelectedCommand = new Command(async () => await ExecuteItemSelectedCommand());
 			CategorySelectedCommand = new Command(ExecuteCategorySelectedCommand);
 			SearchCommand = new Command<string>((searched) => ExecuteSearchCommand(searched));
 		}
@@ -398,16 +399,19 @@ namespace LearningXamarin.ViewModels
 			IsBusy = false;
 		}
 
-		private void ExecuteItemSelectedCommand()
+		private async Task ExecuteItemSelectedCommand()
 		{
 			if (SelectedItem == null)
 			{
 				return;
 			}
 
-			_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
+			//_navigationService.PushAsync(new IKEAItemDetailedPage(SelectedItem));
+            var jsonStr = JsonConvert.SerializeObject(SelectedItem);
+			var escapedData = Uri.EscapeDataString(jsonStr);
+            await Shell.Current.GoToAsync($"/{nameof(IKEAItemDetailedPage)}?item={escapedData}");
 
-			SelectedItem = null;
+            SelectedItem = null;
 		}
 
 		private void ExecuteCategorySelectedCommand()
