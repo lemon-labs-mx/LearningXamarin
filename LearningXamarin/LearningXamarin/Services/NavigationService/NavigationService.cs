@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace LearningXamarin.Services.NavigationService
 {
-    public class NavigationService
+    public class NavigationService : INavigationService
     {
         public async Task NavigateTo(string route)
         {

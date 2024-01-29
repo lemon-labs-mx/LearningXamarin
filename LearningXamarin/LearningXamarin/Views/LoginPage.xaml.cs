@@ -1,4 +1,5 @@
-﻿using LearningXamarin.ViewModels;
+﻿using LearningXamarin.Helpers;
+using LearningXamarin.ViewModels;
 using Xamarin.Essentials; //Add this using
 using Xamarin.Forms;
 
@@ -9,7 +10,8 @@ namespace LearningXamarin.Views
 		public LoginPage()
 		{
 			InitializeComponent();
-			BindingContext = new LoginViewModel();
+			//BindingContext = new LoginViewModel();
+			BindingContext = this.GetViewModel<LoginViewModel>();
 			ChangeIcon();
 		}
 

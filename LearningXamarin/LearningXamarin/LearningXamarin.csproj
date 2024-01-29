@@ -17,6 +17,7 @@
     <PackageReference Include="RestSharp" Version="110.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
+    <PackageReference Include="Autofac" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\" />

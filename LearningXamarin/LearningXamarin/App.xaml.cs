@@ -8,6 +8,7 @@ namespace LearningXamarin
     {
         public App ()
         {
+            //Xamarin.Forms method to create the app
             InitializeComponent();
             ApplyAppResources();
             RegisterRoutes();

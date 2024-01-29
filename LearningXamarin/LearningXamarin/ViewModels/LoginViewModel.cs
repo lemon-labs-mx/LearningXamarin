@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Autofac;
+using LearningXamarin.Helpers;
 using LearningXamarin.Services.NavigationService;
 using LearningXamarin.Views;
 using Xamarin.Forms;
@@ -9,7 +11,7 @@ namespace LearningXamarin.ViewModels
 {
 	public class LoginViewModel : BaseViewModel
 	{
-		private readonly NavigationService _navigationService;
+		private readonly INavigationService _navigationService;
 
 		private string _userName;
 		private string _passwordText;
@@ -47,10 +49,14 @@ namespace LearningXamarin.ViewModels
 		public ICommand LoginCommand { get; set; }
 		public ICommand SyncCommand { get; set; }
 
-		public LoginViewModel()
+		public LoginViewModel(INavigationService navigationService)
 		{
 			InitializeCommands();
-			_navigationService = new NavigationService();
+			//_navigationService = new NavigationService();
+            _navigationService = navigationService;
+
+            System.Diagnostics.Debug.WriteLine("have a nice DAY!".ToTitleCase());
+            System.Diagnostics.Debug.WriteLine("Flag");
 		}
 
 		private void InitializeCommands()
