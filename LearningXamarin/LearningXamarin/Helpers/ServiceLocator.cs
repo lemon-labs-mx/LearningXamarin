@@ -1,6 +1,8 @@
 ﻿using System;
 using Autofac;
+using LearningXamarin.Services.APIClientService;
 using LearningXamarin.Services.NavigationService;
+using LearningXamarin.Services.PopupNavigationService;
 using LearningXamarin.ViewModels;
 
 namespace LearningXamarin.Helpers
@@ -25,6 +27,8 @@ namespace LearningXamarin.Helpers
         private void RegisterServices(ref ContainerBuilder builder)
         {
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
+            builder.RegisterType<APIClientService>().As<IAPIClientService>().SingleInstance();
+            builder.RegisterType<PopupNavigationService>().As<IPopupNavigationService>().SingleInstance();
         }
 
         private void RegisterViewModels(ref ContainerBuilder builder)
