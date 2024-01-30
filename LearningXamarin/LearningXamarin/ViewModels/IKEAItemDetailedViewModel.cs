@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LearningXamarin.Models.Responses;
-using Newtonsoft.Json;
-using Xamarin.Forms;
 
 namespace LearningXamarin.ViewModels
 {

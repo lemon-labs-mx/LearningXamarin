@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Autofac;
-using LearningXamarin.Helpers;
 using LearningXamarin.Services.NavigationService;
 using LearningXamarin.Views;
 using Xamarin.Forms;
@@ -53,10 +51,7 @@ namespace LearningXamarin.ViewModels
 		{
 			InitializeCommands();
 			//_navigationService = new NavigationService();
-            _navigationService = navigationService;
-
-            System.Diagnostics.Debug.WriteLine("have a nice DAY!".ToTitleCase());
-            System.Diagnostics.Debug.WriteLine("Flag");
+			_navigationService = navigationService;
 		}
 
 		private void InitializeCommands()

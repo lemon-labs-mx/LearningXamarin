@@ -11,16 +11,15 @@ using LearningXamarin.Services.APIClientService;
 using LearningXamarin.Services.NavigationService;
 using LearningXamarin.Services.PopupNavigationService;
 using LearningXamarin.Views;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace LearningXamarin.ViewModels
 {
-	public class IKEAItemsViewModel : BaseViewModel
+    public class IKEAItemsViewModel : BaseViewModel
 	{
-		private readonly NavigationService _navigationService;
-		private readonly APIClientService _apiClientService;
-		private readonly PopupNavigationService _popupNavigationService;
+		private readonly INavigationService _navigationService;
+		private readonly IAPIClientService _apiClientService;
+		private readonly IPopupNavigationService _popupNavigationService;
 
 		//L1 - Setitng the default values of the emtpy view
 		private string _defaultEmptyViewMessage = "No Data Found!";
@@ -178,13 +177,21 @@ namespace LearningXamarin.ViewModels
 		public ICommand OrderByItemsCommand { get; set; }
 
 		//L3 - Remove the navigation service, also, remove the parameter
-		public IKEAItemsViewModel()
+		public IKEAItemsViewModel(
+            INavigationService navigationService,
+            IAPIClientService apiClientService,
+            IPopupNavigationService popupNavigationService)
 		{
 			//L3 - We are not using the INavigation service,
 			//we are going to use the AppShell navigation
-			_navigationService = new NavigationService();
-			_apiClientService = new APIClientService();
-			_popupNavigationService = new PopupNavigationService();
+			//_navigationService = new NavigationService();
+			//_apiClientService = new APIClientService();
+			//_popupNavigationService = new PopupNavigationService();
+
+			//L4 - 
+			_navigationService = navigationService;
+			_popupNavigationService = popupNavigationService;
+			_apiClientService = apiClientService;
 
 			//The observable collections (and lists) are null by default
 			IKEAItems = new ObservableCollection<StoreProductResponse>();

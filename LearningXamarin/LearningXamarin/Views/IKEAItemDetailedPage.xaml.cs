@@ -1,4 +1,4 @@
-﻿using LearningXamarin.Models.Responses;
+﻿using LearningXamarin.Helpers;
 using LearningXamarin.ViewModels;
 using Xamarin.Forms;
 
@@ -9,7 +9,9 @@ namespace LearningXamarin.Views
 		public IKEAItemDetailedPage()
 		{
 			InitializeComponent();
-			BindingContext = new IKEAItemDetailedViewModel();
+			//BindingContext = new IKEAItemDetailedViewModel();
+
+			BindingContext = this.GetViewModel<IKEAItemDetailedViewModel>();
 		}
 	}
 }

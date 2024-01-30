@@ -1,4 +1,5 @@
-﻿using LearningXamarin.ViewModels;
+﻿using LearningXamarin.Helpers;
+using LearningXamarin.ViewModels;
 using Xamarin.Forms;
 
 namespace LearningXamarin.Views
@@ -14,7 +15,10 @@ namespace LearningXamarin.Views
 			//BindingContext = new IKEAItemsViewModel(Navigation, username);
 
 			//L3 - Use this simpler one
-			BindingContext = new IKEAItemsViewModel();
+			//BindingContext = new IKEAItemsViewModel();
+
+			//L4 - 
+			BindingContext = this.GetViewModel<IKEAItemsViewModel>();
 		}
 	}
 }
