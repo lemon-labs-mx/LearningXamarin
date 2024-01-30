@@ -6,8 +6,8 @@ using Rg.Plugins.Popup.Pages;
 
 namespace LearningXamarin.Services.PopupNavigationService
 {
-	public class PopupNavigationService
-	{
+    public class PopupNavigationService : IPopupNavigationService
+    {
         private readonly IPopupNavigation _popupNavigation;
 
         public PopupNavigationService()
