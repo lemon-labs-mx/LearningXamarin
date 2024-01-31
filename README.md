@@ -19,17 +19,16 @@ These are the proposed themes, you can edit this file in your own repo to check 
 | Theme | Branch |  
 | ----------- | ----------- |  
 | Xamarin.Essentials | L1-Essentials |
-| App Life Cycle/Page events | |
+| App Life Cycle/Page events | L2-AppLifeCycle |
 | Shell Navigation | L3-Shell |
+| Services & Dependency Injection | L4-NavigaitonService |
 | Detecting screen rotations/Adaptative UI | |
 | Triggers | |
-| Cusotm controls | |
+| Custom controls | |
 | Renderers | |
 | Platform specific-code | |
-| Services | |
 | Preferences | |
 | Secure Storage | |
-| Dependency Injection | |
 
 
 >C#
